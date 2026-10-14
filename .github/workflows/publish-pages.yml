@@ -1,0 +1,55 @@
+name: Publish PSU Smart Schedule
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  cancel-orphaned-deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel the orphaned Pages deployment
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          if gh api --method POST \
+            -H "Accept: application/vnd.github+json" \
+            "/repos/${GITHUB_REPOSITORY}/pages/deployments/69a83eed96903108f60a68bc51a93a63dd3c24cf/cancel"; then
+            echo "Cancelled the orphaned Pages deployment."
+          else
+            echo "The orphaned deployment is already cleared or unavailable."
+          fi
+
+  deploy:
+    needs: cancel-orphaned-deployment
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload static site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5
