@@ -8,14 +8,14 @@
 <style>
 :root{
   --navy:#102d4b;--navy2:#173f63;--teal:#12a99d;--teal-dark:#087f78;
-  --sky:#4f8ff7;--gold:#f3b663;--ink:#1a3047;--muted:#708398;
+  --sky:#4f8ff7;--gold:#f3b663;--ink:#1a3047;--muted:#596f84;
   --line:#e4eaf0;--wash:#f4f7fa;--white:#fff;--red:#d95f67;--red-bg:#fff0f0;
   --green:#278565;--green-bg:#eaf8f2;--shadow:0 18px 50px rgba(28,55,81,.08);
-  --font:"Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif;
+  --font:"Leelawadee UI","Noto Sans Thai",Tahoma,sans-serif;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--wash);color:var(--ink);font:15px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+body{margin:0;background:var(--wash);color:var(--ink);font:16px/1.65 var(--font);-webkit-font-smoothing:antialiased}
 button,input,select{font:inherit}
 button{cursor:pointer}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(79,143,247,.32);outline-offset:2px}
@@ -280,9 +280,164 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .map-building.b1{left:17%;top:19%}.map-building.b2{right:16%;bottom:14%;background:#fff1d5;color:#a17a3f}
 .map-pin{position:absolute;left:58%;top:37%;width:26px;height:26px;border:4px solid #fff;border-radius:50% 50% 50% 0;background:#ec7864;transform:rotate(-45deg);box-shadow:0 3px 9px #0002}
 .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+/* Readability pass: larger type, stronger contrast, and comfortable touch targets. */
+:root{--muted:#596f84}
+body{font-size:16px;line-height:1.7;text-rendering:optimizeLegibility}
+.brand-lockup small,.auth-foot,.auth-small,.field-label,.auth-hint,.demo-link{font-size:14px}
+.auth-card .welcome{font-size:15px}
+.auth-card h2{font-size:32px}
+.auth-card .desc{font-size:15px;line-height:1.7}
+.input{min-height:48px;padding:13px 15px;font-size:16px}
+.btn{min-height:44px;padding:12px 18px;font-size:15px}
+.btn-small{min-height:40px;padding:9px 13px;font-size:13px}
+.btn-wide{min-height:48px}
+.demo-link{min-height:44px}
+.sidebar-brand b{font-size:16px}
+.sidebar-brand small,.profile-meta small{font-size:12px}
+.nav-title{font-size:12px;color:#64798d}
+.nav-item{min-height:44px;font-size:14px;color:#4f6479}
+.nav-badge{font-size:12px}
+.side-help b,.profile-meta b{font-size:14px}
+.side-help p{font-size:13px;line-height:1.65}
+.side-help button{font-size:13px;min-height:40px}
+.breadcrumb{font-size:14px}
+.semester-select{min-height:42px;padding:8px 12px;font-size:13px}
+.icon-btn{width:44px;height:44px}
+.top-user span{font-size:14px}
+.content{padding-top:34px}
+.page-heading h1{font-size:30px;line-height:1.35;letter-spacing:0}
+.page-heading p{font-size:15px;line-height:1.7}
+.demo-pill{min-height:34px;padding:6px 12px;font-size:12px}
+.hero-label{font-size:12px}
+.hero-copy h2{font-size:26px;line-height:1.5}
+.hero-copy p{font-size:15px;line-height:1.8}
+.hero-buttons .btn{font-size:14px}
+.visual-head{font-size:13px}
+.visual-event b{font-size:13px;line-height:1.5}
+.visual-event small{font-size:12px;line-height:1.55}
+.metric b{font-size:21px}
+.metric span{font-size:13px;line-height:1.5}
+.card-head h3{font-size:16px}
+.text-link{font-size:13px;min-height:40px;padding:7px}
+.schedule-row{min-height:66px;padding:12px}
+.schedule-time{font-size:13px;line-height:1.5}
+.schedule-info b{font-size:14px;line-height:1.5}
+.schedule-info span{font-size:13px;line-height:1.5}
+.room-chip{font-size:12px;padding:6px 8px}
+.alert-row{padding:12px}
+.alert-row b{font-size:13px;line-height:1.5}
+.alert-row span{font-size:12px;line-height:1.6}
+.flow-strip{padding:17px 12px}
+.flow-num{width:32px;height:32px;font-size:13px}
+.flow-step span{font-size:12px;line-height:1.5}
+.page-note{font-size:13px;line-height:1.75}
+.segmented button{min-height:42px;padding:9px 14px;font-size:13px}
+.legend{font-size:12px;line-height:1.6}
+.calendar-grid{grid-template-rows:44px repeat(20,34px)}
+.calendar-grid.day-mode{grid-template-columns:76px minmax(280px,1fr)}
+.cal-head{font-size:13px}
+.cal-time{font-size:12px}
+.cal-event{font-size:12px;line-height:1.5;padding:7px 9px}
+.cal-event b{font-size:12px;line-height:1.4}
+.month-cell{min-height:88px;padding:7px;font-size:12px}
+.month-dot{font-size:10px;padding:4px 5px}
+.calendar-grid.month-mode{grid-template-rows:40px repeat(5,90px)}
+.calendar-bottom span{font-size:12px;line-height:1.6}
+.select{min-height:42px;padding:8px 12px;font-size:13px}
+.search-wrap input{min-height:44px;padding:10px 0;font-size:15px}
+.course-card h3{font-size:16px;line-height:1.55}
+.course-code,.course-credits,.course-meta span{font-size:12px}
+.course-card p{font-size:13px;line-height:1.7}
+.course-actions button{font-size:13px;padding:9px 12px}
+.empty-state{font-size:14px;line-height:1.7}
+.planned-code{width:38px;height:38px;font-size:11px}
+.planned-main b{font-size:14px;line-height:1.5}
+.planned-main span,.sis-item{font-size:12px;line-height:1.6}
+.remove-btn{min-height:40px;padding:8px 11px;font-size:12px}
+.sis-current h4{font-size:13px}
+.conflict-box b{font-size:15px}
+.conflict-box p,.conflict-lines,.info-callout{font-size:13px;line-height:1.75}
+.setting-row b{font-size:14px;line-height:1.5}
+.setting-row span{font-size:12px;line-height:1.6}
+.switch{width:44px;height:26px}
+.switch-ui:after{width:18px;height:18px}
+.switch input:checked+.switch-ui:after{transform:translateX(18px)}
+.export-panel .btn{font-size:14px}
+.flow-circle{width:50px;height:50px;font-size:14px}
+.flow-node h3{font-size:14px;line-height:1.5}
+.flow-node p{font-size:13px;line-height:1.7}
+.flow-node button{font-size:12px;min-height:40px;padding:8px 11px}
+.workflow-note{font-size:13px;line-height:1.75}
+.toast{font-size:14px;line-height:1.6}
+.modal-head h3{font-size:19px}
+.modal-body{font-size:14px;line-height:1.8}
+.modal-close{width:40px;height:40px}
+.map-building{font-size:10px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(46,116,212,.58);outline-offset:3px}
+@media(max-width:820px){
+  .auth-copy h1{font-size:38px}
+  .auth-copy p{font-size:15px}
+  .nav-item{min-height:42px;padding:9px 12px;font-size:13px}
+  .topbar{height:auto;min-height:64px;padding-inline:16px}
+  .content{padding:24px 18px 100px}
+  .mobile-nav button{min-height:44px;padding:7px 8px;font-size:11px}
+  .mobile-nav svg{width:19px;height:19px}
+  .flow-step span{font-size:12px}
+}
+@media(max-width:570px){
+  .auth-copy h1{font-size:34px}
+  .auth-copy p{font-size:14px}
+  .feature-mini b{font-size:12px}
+  .auth-card h2{font-size:27px}
+  .hero-copy h2{font-size:22px}
+  .hero-copy p{font-size:14px}
+  .page-heading h1{font-size:25px}
+  .page-heading p{font-size:14px}
+  .metric{padding:12px}
+  .metric b{font-size:18px}
+  .metric span{font-size:12px}
+  .flow-strip{grid-template-columns:repeat(5,minmax(112px,1fr))}
+  .flow-step span{font-size:11px}
+  .calendar-grid.month-mode{grid-template-rows:40px repeat(5,80px)}
+  .month-cell{min-height:78px;font-size:11px}
+  .month-dot{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
 @media(max-width:1080px){.app-shell{grid-template-columns:220px minmax(0,1fr)}.sidebar{padding-inline:13px}.hero-card{grid-template-columns:minmax(0,1.2fr) minmax(225px,.8fr)}.content{padding-inline:25px}.topbar{padding-inline:25px}}
 @media(max-width:820px){.auth-page{grid-template-columns:1fr}.auth-brand{min-height:330px;padding:27px 25px 24px}.auth-copy{margin-top:45px}.auth-copy h1{font-size:38px;max-width:460px}.auth-copy p{font-size:13px;max-width:440px}.auth-features{max-width:470px;margin-top:19px}.feature-mini{padding:10px}.feature-mini span{display:none}.auth-art{width:190px;height:140px;right:0;top:58%;opacity:.44}.art-calendar{width:170px;padding:12px}.art-note{width:115px;padding:10px}.auth-foot{margin-top:22px}.auth-form-side{padding:36px 24px 52px}.app-shell{grid-template-columns:1fr}.sidebar{position:relative;height:auto;padding:13px 17px;border-right:0;border-bottom:1px solid var(--line)}.sidebar-brand{padding:0;border:0}.sidebar-brand .logo-mark{width:37px;height:37px}.sidebar-brand small{display:none}.nav-title,.sidebar-spacer,.side-help,.profile-card{display:none}.nav-menu{margin-top:12px;display:flex;overflow:auto;gap:5px}.nav-item{white-space:nowrap;padding:8px 10px;font-size:10px}.nav-item svg{width:15px;height:15px}.topbar{height:58px;padding-inline:18px}.content{padding:23px 18px 85px}.mobile-nav{position:fixed;z-index:10;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-around;gap:3px;padding:7px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border:1px solid var(--line);box-shadow:0 8px 30px rgba(18,45,72,.12);border-radius:15px}.mobile-nav button{border:0;background:transparent;color:#718296;padding:5px 7px;display:grid;justify-items:center;gap:3px;font-size:8px;min-width:52px}.mobile-nav button.active{color:var(--teal-dark);font-weight:800}.mobile-nav svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}.dashboard-grid{grid-template-columns:1fr}.hero-card{grid-template-columns:1fr minmax(205px,.65fr)}.hero-copy h2{font-size:19px}}
 @media(max-width:570px){.auth-brand{min-height:290px;padding:22px 20px}.auth-copy{margin-top:37px}.auth-copy h1{font-size:32px}.auth-copy p{font-size:12px}.auth-features{gap:7px}.feature-mini{padding:9px}.feature-mini b{font-size:10px}.mini-icon{width:27px;height:27px}.auth-form-side{padding:32px 20px 42px}.auth-card h2{font-size:25px}.hero-card{grid-template-columns:1fr;padding:21px}.hero-visual{display:none}.hero-copy h2{font-size:18px}.page-heading{align-items:flex-start;flex-direction:column;margin-bottom:15px}.page-heading h1{font-size:22px}.heading-actions{width:100%;justify-content:space-between}.metric-grid{gap:7px}.metric{padding:11px 9px;gap:8px;align-items:flex-start;flex-direction:column}.metric-icon{width:31px;height:31px;border-radius:9px}.metric b{font-size:16px}.metric span{font-size:8px}.flow-strip{overflow:auto;grid-template-columns:repeat(5,minmax(100px,1fr));padding:13px 5px}.flow-step{padding:0 6px}.flow-step span{font-size:8px}.schedule-row{grid-template-columns:47px 4px minmax(0,1fr);gap:8px}.room-chip{grid-column:3;margin-top:-4px;width:max-content}.course-grid,.planner-grid,.alert-settings-grid{grid-template-columns:1fr}.course-card{min-height:150px}.toolbar{align-items:flex-start}.toolbar>.legend{order:3;width:100%}.flow-line{grid-template-columns:1fr;gap:4px;margin:15px 0}.flow-node{display:grid;grid-template-columns:42px minmax(0,1fr);gap:9px;text-align:left;padding:8px 0;align-items:center}.flow-node:not(:last-child):after{width:1px;height:auto;left:21px;right:auto;top:48px;bottom:-5px}.flow-circle{grid-row:1/4;margin:0;width:40px;height:40px}.flow-node h3{align-self:end}.flow-node p{margin:0}.flow-node button{justify-self:start;width:max-content}.semester-select{font-size:9px;padding:7px}.top-user span{display:none}.calendar-grid.month-mode{grid-template-rows:30px repeat(5,60px)}.month-cell{font-size:8px;padding:3px}.month-dot{font-size:7px;padding:2px}}
+/* Keep readable sizing after the compact-layout rules above. */
+@media(max-width:820px){
+  .auth-copy p{font-size:15px}
+  .nav-item{min-height:42px;padding:9px 12px;font-size:13px}
+  .topbar{height:auto;min-height:64px;padding-inline:16px}
+  .content{padding:24px 18px 100px}
+  .mobile-nav button{min-height:44px;padding:7px 8px;font-size:11px}
+  .mobile-nav svg{width:19px;height:19px}
+  .flow-step span{font-size:12px}
+}
+@media(max-width:570px){
+  .auth-copy h1{font-size:34px}
+  .auth-copy p{font-size:14px}
+  .feature-mini b{font-size:12px}
+  .auth-card h2{font-size:27px}
+  .hero-copy h2{font-size:22px}
+  .hero-copy p{font-size:14px}
+  .page-heading h1{font-size:25px}
+  .page-heading p{font-size:14px}
+  .metric{padding:12px}
+  .metric b{font-size:18px}
+  .metric span{font-size:12px}
+  .flow-strip{grid-template-columns:repeat(5,minmax(112px,1fr))}
+  .flow-step span{font-size:11px}
+  .calendar-grid.month-mode{grid-template-rows:40px repeat(5,80px)}
+  .month-cell{min-height:78px;font-size:11px}
+  .month-dot{font-size:9px}
+  .semester-select{font-size:12px}
+}
 </style>
 </head>
 <body>
