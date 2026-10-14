@@ -92,7 +92,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 .side-help p{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0 9px}
 .side-help button{padding:0;border:0;background:none;color:var(--teal-dark);font-size:11px;font-weight:750}
 .profile-card{display:flex;align-items:center;gap:10px;padding:16px 5px 0;margin-top:15px;border-top:1px solid #edf0f4}
-.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#d5f4ef,#b7ddd8);color:#145d63;font-weight:800;font-size:12px;flex:none}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#d5f4ef,#b7ddd8);color:#145d63;font-weight:800;font-size:12px;flex:none}.logo-mark,.avatar{position:relative;overflow:hidden;background:#fff}.sidebar-brand .logo-mark{background:#fff}.psu-cropped-mark{position:absolute;left:0;top:50%;width:185%;max-width:none;height:auto;transform:translateY(-50%)}
 .profile-meta{min-width:0;flex:1}
 .profile-meta b{display:block;font-size:12px;color:var(--navy)}
 .profile-meta small{font-size:10px;color:var(--muted)}
@@ -516,7 +516,7 @@ html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] a:focus-vis
 <section class="auth-page" id="authPage">
   <div class="auth-brand">
     <div class="auth-brand-inner">
-      <div class="brand-lockup"><div class="logo-mark">PSU</div><div>PSU Smart Schedule<small>PERSONAL ACADEMIC PLANNER</small></div></div>
+      <div class="brand-lockup"><div class="logo-mark"><img class="psu-cropped-mark" src="https://www.psu.ac.th/hatyai/img/psubrand/psu1.png" alt="โลโก้มหาวิทยาลัยสงขลานครินทร์"></div><div>PSU Smart Schedule<small>PERSONAL ACADEMIC PLANNER</small></div></div>
       <div class="auth-copy">
         <div class="eyebrow">จัดตารางเรียนให้เป็นเรื่องง่าย</div>
         <h1>วางแผนเทอมนี้<br>ได้อย่างมั่นใจ</h1>
@@ -553,7 +553,7 @@ html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] a:focus-vis
 
 <div class="app-shell hidden" id="appShell">
   <aside class="sidebar">
-    <div class="sidebar-brand"><div class="logo-mark">PSU</div><div><b>Smart Schedule</b><small>วางแผนเรียนอย่างชาญฉลาด</small></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="เปลี่ยนเป็นโหมดมืด" aria-pressed="false" title="สลับธีมสว่าง/มืด"><svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.4A8.4 8.4 0 0 1 8.6 3.8 8.6 8.6 0 1 0 20.2 15.4Z"/></svg><svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><span id="themeLabel">โหมดมืด</span></button></div>
+    <div class="sidebar-brand"><div class="logo-mark"><img class="psu-cropped-mark" src="https://www.psu.ac.th/hatyai/img/psubrand/psu1.png" alt="โลโก้มหาวิทยาลัยสงขลานครินทร์"></div><div><b>Smart Schedule</b><small>วางแผนเรียนอย่างชาญฉลาด</small></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="เปลี่ยนเป็นโหมดมืด" aria-pressed="false" title="สลับธีมสว่าง/มืด"><svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.4A8.4 8.4 0 0 1 8.6 3.8 8.6 8.6 0 1 0 20.2 15.4Z"/></svg><svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><span id="themeLabel">โหมดมืด</span></button></div>
     <div class="nav-title">เมนูหลัก</div>
     <nav class="nav-menu" aria-label="เมนูหลัก">
       <a href="#dashboard" class="nav-item active" data-page="dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>ภาพรวม</a>
@@ -565,7 +565,7 @@ html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] a:focus-vis
     </nav>
     <div class="sidebar-spacer"></div>
     <div class="side-help"><b>ยังไม่แน่ใจว่าจะเริ่มตรงไหน?</b><p>ดูขั้นตอนการใช้งาน PSU Smart Schedule แบบสั้น ๆ</p><button data-open="workflow">ดู Workflow →</button></div>
-    <div class="profile-card"><div class="avatar">PSU</div><div class="profile-meta"><b>นักศึกษาตัวอย่าง</b><small>โหมดสาธิต</small></div><button class="profile-menu" id="logout" aria-label="ออกจากโหมดสาธิต">⋯</button></div>
+    <div class="profile-card"><div class="avatar"><img class="psu-cropped-mark" src="https://www.psu.ac.th/hatyai/img/psubrand/psu1.png" alt="โลโก้มหาวิทยาลัยสงขลานครินทร์"></div><div class="profile-meta"><b>นักศึกษาตัวอย่าง</b><small>โหมดสาธิต</small></div><button class="profile-menu" id="logout" aria-label="ออกจากโหมดสาธิต">⋯</button></div>
   </aside>
   <main class="main-area">
     <header class="topbar">
@@ -574,7 +574,7 @@ html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] a:focus-vis
         <span class="demo-pill"><i></i>ข้อมูลตัวอย่าง</span>
         <select class="semester-select" aria-label="ภาคการศึกษา"><option>ภาคเรียน 1 / 2569</option><option>ภาคเรียน 2 / 2569</option><option>ภาคฤดูร้อน / 2569</option></select>
         <button class="icon-btn" id="topAlerts" aria-label="ไปหน้าแจ้งเตือน"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><i class="dot"></i></button>
-        <button class="top-user" id="topUser"><div class="avatar">PSU</div><span>นักศึกษา</span></button>
+        <button class="top-user" id="topUser"><div class="avatar"><img class="psu-cropped-mark" src="https://www.psu.ac.th/hatyai/img/psubrand/psu1.png" alt="โลโก้มหาวิทยาลัยสงขลานครินทร์"></div><span>นักศึกษา</span></button>
       </div>
     </header>
     <div class="content">
@@ -648,7 +648,7 @@ html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] a:focus-vis
           <div class="flow-node"><i class="flow-circle">04</i><h3>วางแผน / เช็กเวลา</h3><p>ลองจัดวิชาก่อน<br>ตรวจเวลาซ้อน</p><button class="btn btn-light" data-open="planner">เปิดแผนวิชา</button></div>
           <div class="flow-node"><i class="flow-circle">05</i><h3>ตั้งเตือน / ส่งออก</h3><p>เลือกการเตือนและ<br>ดาวน์โหลดไฟล์ .ics</p><button class="btn btn-light" data-open="alerts">ตั้งค่าเตือน</button></div>
         </div><div class="workflow-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>PSU Smart Schedule ทำหน้าที่แสดงผลและช่วยวางแผนเท่านั้น ข้อมูลจะอ่านผ่าน Integration Layer และ Cache ส่วนการลงทะเบียนจริงยังทำที่ SIS</span></div></div>
-        <div class="dashboard-grid" style="margin-top:14px"><div class="card"><div class="card-head"><h3>ผู้ใช้งานหลัก</h3></div><div class="schedule-row"><div class="avatar">PSU</div><div class="schedule-info"><b>นักศึกษา</b><span>ดูตาราง ค้นหารายวิชา ตรวจเวลาชน และตั้งการแจ้งเตือน</span></div></div></div><div class="card"><div class="card-head"><h3>ขอบเขตระบบ</h3></div><div class="alert-row"><div class="alert-mark">✓</div><div><b>ช่วยให้วางแผนได้ดีขึ้น</b><span>ไม่แก้ไขข้อมูลหลักและไม่ลงทะเบียนแทนผู้ใช้</span></div></div></div></div>
+        <div class="dashboard-grid" style="margin-top:14px"><div class="card"><div class="card-head"><h3>ผู้ใช้งานหลัก</h3></div><div class="schedule-row"><div class="avatar"><img class="psu-cropped-mark" src="https://www.psu.ac.th/hatyai/img/psubrand/psu1.png" alt="โลโก้มหาวิทยาลัยสงขลานครินทร์"></div><div class="schedule-info"><b>นักศึกษา</b><span>ดูตาราง ค้นหารายวิชา ตรวจเวลาชน และตั้งการแจ้งเตือน</span></div></div></div><div class="card"><div class="card-head"><h3>ขอบเขตระบบ</h3></div><div class="alert-row"><div class="alert-mark">✓</div><div><b>ช่วยให้วางแผนได้ดีขึ้น</b><span>ไม่แก้ไขข้อมูลหลักและไม่ลงทะเบียนแทนผู้ใช้</span></div></div></div></div>
       </section>
     </div>
   </main>
