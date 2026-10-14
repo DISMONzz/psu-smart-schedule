@@ -438,6 +438,78 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
   .month-dot{font-size:9px}
   .semester-select{font-size:12px}
 }
+/* Theme switch: keep surfaces and text comfortable in both light and dark modes. */
+.theme-toggle{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:8px 11px;border:1px solid var(--line);border-radius:11px;background:#f7fafc;color:#355169;font:inherit;font-size:13px;font-weight:750;white-space:nowrap;cursor:pointer;transition:background .18s,border-color .18s,color .18s}
+.theme-toggle:hover{background:#edf4f7;border-color:#bfd2df}
+.theme-toggle svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.theme-sun{display:none}
+html[data-theme="dark"]{color-scheme:dark;--navy:#e6f0f8;--navy2:#cfdeeb;--ink:#e7eff6;--muted:#b2c1cf;--line:#34485a;--wash:#0c1722;--white:#142331;--red:#f18a92;--red-bg:#3a222a;--green:#65c39b;--green-bg:#16372f;--teal:#3bc7ba;--teal-dark:#66ddd1;--shadow:0 18px 50px rgba(0,0,0,.28)}
+html[data-theme="dark"] body{background:#0c1722;color:var(--ink)}
+html[data-theme="dark"] .auth-page{background:#101e2b}
+html[data-theme="dark"] .auth-form-side{background:#101e2b}
+html[data-theme="dark"] .app-shell{background:#0c1722}
+html[data-theme="dark"] .sidebar{background:#111f2d;border-color:#2b3d4e}
+html[data-theme="dark"] .sidebar-brand{border-color:#2b3d4e}
+html[data-theme="dark"] .sidebar-brand .logo-mark{background:#20374b;color:#92eee2}
+html[data-theme="dark"] .nav-title{color:#a9bbc9}
+html[data-theme="dark"] .nav-item{color:#c0ccd6}
+html[data-theme="dark"] .nav-item:hover{background:#1b2c3b;color:#fff}
+html[data-theme="dark"] .nav-item.active{background:#183936;color:#83e3d8}
+html[data-theme="dark"] .nav-item.active svg{stroke:#83e3d8}
+html[data-theme="dark"] .side-help{background:#172938;border-color:#2c4557}
+html[data-theme="dark"] .topbar{background:rgba(16,30,43,.96);border-color:#2b3d4e}
+html[data-theme="dark"] .icon-btn,html[data-theme="dark"] .semester-select{background:#172938;color:#e1eaf1;border-color:#3a5063}
+html[data-theme="dark"] .top-user{color:var(--ink)}
+html[data-theme="dark"] .theme-toggle{background:#192b3b;color:#e8f2fa;border-color:#40566a}
+html[data-theme="dark"] .theme-toggle:hover{background:#243b4f;border-color:#5b758c}
+html[data-theme="dark"] .theme-moon{display:none}
+html[data-theme="dark"] .theme-sun{display:block}
+html[data-theme="dark"] .card,html[data-theme="dark"] .panel-card,html[data-theme="dark"] .course-card,html[data-theme="dark"] .schedule-row,html[data-theme="dark"] .planned-item,html[data-theme="dark"] .search-wrap,html[data-theme="dark"] .input,html[data-theme="dark"] .select,html[data-theme="dark"] .empty-state,html[data-theme="dark"] .flow-strip{background:#142433;color:var(--ink);border-color:#2e4355}
+html[data-theme="dark"] .hero-visual{background:#172a39;color:#e7eff6}
+html[data-theme="dark"] .visual-head{border-color:#34495b}
+html[data-theme="dark"] .visual-event small{color:#b6c5d1}
+html[data-theme="dark"] .metric{background:#142433;border-color:#2e4355}
+html[data-theme="dark"] .metric-icon{background:#183b3a;color:#75e2d6}
+html[data-theme="dark"] .metric:nth-child(2) .metric-icon{background:#1d3151;color:#9bbcff}
+html[data-theme="dark"] .metric:nth-child(3) .metric-icon{background:#403322;color:#ffd18c}
+html[data-theme="dark"] .alert-row{background:#192b3a}
+html[data-theme="dark"] .room-chip,html[data-theme="dark"] .course-meta span{background:#213547;color:#d0dce6}
+html[data-theme="dark"] .demo-pill{background:#332b20;border-color:#59472b;color:#f1cb86}
+html[data-theme="dark"] .btn-light{background:#263b4d;color:#e7f0f7}
+html[data-theme="dark"] .btn-outline{background:#172938;border-color:#40566a;color:#e7f0f7}
+html[data-theme="dark"] .segmented{background:#1a2b39}
+html[data-theme="dark"] .segmented button{color:#c0cbd5}
+html[data-theme="dark"] .segmented button.active{background:#263c4f;color:#fff}
+html[data-theme="dark"] .cal-head{background:#192b3a;color:#d7e2eb;border-color:#304557}
+html[data-theme="dark"] .cal-head.focus{background:#183b39;color:#8de5db}
+html[data-theme="dark"] .cal-line,html[data-theme="dark"] .calendar-bottom{border-color:#2a3e50}
+html[data-theme="dark"] .calendar-grid{background:#142433}
+html[data-theme="dark"] .cal-event{background:#1b403d;color:#adf0e8}
+html[data-theme="dark"] .cal-event.plan,html[data-theme="dark"] .month-dot.plan{background:#23395c;color:#c2d6ff}
+html[data-theme="dark"] .cal-event.overlap,html[data-theme="dark"] .month-dot.overlap{background:#482830;color:#ffc0c5}
+html[data-theme="dark"] .month-cell{color:#c2ced8;border-color:#304557}
+html[data-theme="dark"] .month-cell.today{background:#183b39;color:#8de5db}
+html[data-theme="dark"] .month-dot{background:#1b403d;color:#adf0e8}
+html[data-theme="dark"] .calendar-wrap{border-color:#304557}
+html[data-theme="dark"] .course-credits{background:#3a3022;color:#ffdb9c}
+html[data-theme="dark"] .conflict-box{background:#3a222a;border-color:#68404a;color:#ffc0c5}
+html[data-theme="dark"] .conflict-box.clear{background:#16372f;border-color:#2d6554;color:#9ce3bf}
+html[data-theme="dark"] .info-callout{background:#172b39;border-color:#2d4658;color:#c7d8e4}
+html[data-theme="dark"] .switch-ui{background:#435667}
+html[data-theme="dark"] .switch input:checked+.switch-ui{background:#159b8f}
+html[data-theme="dark"] .toast{background:#e7f0f6;color:#142433}
+html[data-theme="dark"] .modal{background:#142433;color:var(--ink)}
+html[data-theme="dark"] .modal-close{background:#263b4d;color:#e5edf4}
+html[data-theme="dark"] .map-card{background:#1d332f}
+html[data-theme="dark"] .map-road{background:#6a7b79;border-color:#3d5551}
+html[data-theme="dark"] .map-building{background:#29473b;color:#d5f3e2}
+html[data-theme="dark"] .map-building.b2{background:#514029;color:#ffe0a9}
+html[data-theme="dark"] .mobile-nav{background:rgba(17,31,45,.96);border-color:#34485a}
+html[data-theme="dark"] .mobile-nav button{color:#c0ccd6}
+html[data-theme="dark"] .mobile-nav button.active{color:#73ded2}
+html[data-theme="dark"] .auth-hint{background:#393022;color:#f1d39b}
+html[data-theme="dark"] .auth-small{border-color:#35495b}
+html[data-theme="dark"] button:focus-visible,html[data-theme="dark"] a:focus-visible,html[data-theme="dark"] input:focus-visible,html[data-theme="dark"] select:focus-visible{outline-color:#80bcff}
 </style>
 </head>
 <body>
@@ -481,7 +553,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 <div class="app-shell hidden" id="appShell">
   <aside class="sidebar">
-    <div class="sidebar-brand"><div class="logo-mark">PSU</div><div><b>Smart Schedule</b><small>วางแผนเรียนอย่างชาญฉลาด</small></div></div>
+    <div class="sidebar-brand"><div class="logo-mark">PSU</div><div><b>Smart Schedule</b><small>วางแผนเรียนอย่างชาญฉลาด</small></div><button class="theme-toggle" id="themeToggle" type="button" aria-label="เปลี่ยนเป็นโหมดมืด" aria-pressed="false" title="สลับธีมสว่าง/มืด"><svg class="theme-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.4A8.4 8.4 0 0 1 8.6 3.8 8.6 8.6 0 1 0 20.2 15.4Z"/></svg><svg class="theme-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg><span id="themeLabel">โหมดมืด</span></button></div>
     <div class="nav-title">เมนูหลัก</div>
     <nav class="nav-menu" aria-label="เมนูหลัก">
       <a href="#dashboard" class="nav-item active" data-page="dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>ภาพรวม</a>
@@ -627,6 +699,10 @@ byId("checkConflicts").addEventListener("click",()=>{lastChecked=findConflicts()
 byId("saveAlerts").addEventListener("click",()=>{const settings={};document.querySelectorAll("[data-setting]").forEach(x=>settings[x.dataset.setting]=x.checked);localStorage.setItem("psuDemoAlerts",JSON.stringify(settings));toast("บันทึกการตั้งค่าแจ้งเตือนแล้ว")});
 byId("downloadIcs").addEventListener("click",downloadIcs);
 byId("googleConnect").addEventListener("click",showCalendarConsent);
+const themeToggle=byId("themeToggle");
+function applyTheme(theme){const dark=theme==="dark";document.documentElement.dataset.theme=dark?"dark":"light";themeToggle.setAttribute("aria-pressed",String(dark));themeToggle.setAttribute("aria-label",dark?"เปลี่ยนเป็นโหมดสว่าง":"เปลี่ยนเป็นโหมดมืด");byId("themeLabel").textContent=dark?"โหมดสว่าง":"โหมดมืด"}
+try{applyTheme(localStorage.getItem("psuDemoTheme")==="dark"?"dark":"light")}catch(e){applyTheme("light")}
+themeToggle.addEventListener("click",()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";applyTheme(next);try{localStorage.setItem("psuDemoTheme",next)}catch(e){}toast(next==="dark"?"เปิดธีมมืดแล้ว":"เปิดธีมสว่างแล้ว")});
 document.addEventListener("click",e=>{const room=e.target.closest("[data-room]");if(room){const c=[...currentClasses,...catalog].find(x=>x.id===room.dataset.room);if(c)showRoom(c)}});
 window.addEventListener("hashchange",navigateFromHash);
 function esc(s){return String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]))}
