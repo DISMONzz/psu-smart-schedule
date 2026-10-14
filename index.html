@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#102d4b">
+<title>PSU Smart Schedule | เว็บต้นแบบ</title>
+<style>
+:root{
+  --navy:#102d4b;--navy2:#173f63;--teal:#12a99d;--teal-dark:#087f78;
+  --sky:#4f8ff7;--gold:#f3b663;--ink:#1a3047;--muted:#708398;
+  --line:#e4eaf0;--wash:#f4f7fa;--white:#fff;--red:#d95f67;--red-bg:#fff0f0;
+  --green:#278565;--green-bg:#eaf8f2;--shadow:0 18px 50px rgba(28,55,81,.08);
+  --font:"Noto Sans Thai","Leelawadee UI",Tahoma,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--wash);color:var(--ink);font:15px/1.55 var(--font);-webkit-font-smoothing:antialiased}
+button,input,select{font:inherit}
+button{cursor:pointer}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(79,143,247,.32);outline-offset:2px}
+.hidden{display:none!important}
+.auth-page{min-height:100vh;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(390px,.92fr);background:#f8fbfd;overflow:hidden}
+.auth-brand{position:relative;min-height:100vh;padding:42px clamp(32px,7vw,100px);background:linear-gradient(145deg,#102d4b 0%,#173f63 63%,#126e78 100%);color:#fff;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.auth-brand:before,.auth-brand:after{content:"";position:absolute;border:1px solid rgba(255,255,255,.13);border-radius:50%;pointer-events:none}
+.auth-brand:before{width:660px;height:660px;right:-255px;top:12%}
+.auth-brand:after{width:470px;height:470px;right:-155px;top:22%}
+.auth-brand-inner{position:relative;z-index:1;max-width:590px}
+.brand-lockup{display:flex;align-items:center;gap:13px;font-weight:750;letter-spacing:.1px}
+.logo-mark{width:48px;height:48px;display:grid;place-items:center;border-radius:16px;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);color:#b7fff4;font-size:15px;font-weight:800}
+.brand-lockup small{display:block;font-weight:450;font-size:12px;color:#c2d5e4;margin-top:2px}
+.auth-copy{margin-top:clamp(58px,11vh,130px)}
+.eyebrow{font-size:12px;letter-spacing:1.2px;text-transform:uppercase;color:#8be1d7;font-weight:750}
+.auth-copy h1{font-size:clamp(36px,4.7vw,62px);line-height:1.14;letter-spacing:-1.4px;margin:15px 0 16px;max-width:570px}
+.auth-copy p{font-size:16px;color:#c4d6e4;max-width:495px;line-height:1.8}
+.auth-features{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:32px;max-width:550px}
+.feature-mini{padding:15px 14px;border:1px solid rgba(255,255,255,.16);border-radius:15px;background:rgba(255,255,255,.06);backdrop-filter:blur(8px)}
+.feature-mini b{display:block;font-size:13px;color:#effffd;margin-top:10px}
+.feature-mini span{display:block;font-size:11px;color:#bdd2df;margin-top:4px}
+.mini-icon{width:31px;height:31px;border-radius:10px;background:rgba(18,169,157,.18);color:#8ce9df;display:grid;place-items:center}
+.mini-icon svg{width:17px;height:17px}
+.auth-foot{position:relative;z-index:1;font-size:12px;color:#aac2d4}
+.auth-art{position:absolute;right:-13%;top:40%;width:250px;height:180px;transform:translateY(-50%);z-index:0;opacity:.72}
+.art-card{position:absolute;background:rgba(255,255,255,.96);box-shadow:0 25px 60px rgba(0,0,0,.15);color:var(--ink);border-radius:18px}
+.art-calendar{right:2px;top:0;width:230px;padding:18px;transform:rotate(4deg)}
+.art-calendar b{color:var(--navy);font-size:13px}
+.art-row{display:grid;grid-template-columns:34px repeat(3,1fr);gap:5px;margin-top:11px;align-items:center;font-size:9px;color:#8495a5}
+.art-cell{height:22px;border-radius:6px;background:#eff3f7}
+.art-cell.c1{background:#c9f0eb}.art-cell.c2{background:#dce9ff}.art-cell.c3{background:#fff0da}
+.art-note{left:0;bottom:0;width:165px;padding:15px;transform:rotate(-6deg)}
+.art-note b{font-size:11px;color:var(--teal-dark)}
+.art-note span{display:block;font-size:9px;color:#6b7d90;margin-top:6px}
+.auth-form-side{display:grid;place-items:center;padding:42px 28px}
+.auth-card{width:min(100%,430px)}
+.auth-card .welcome{font-size:13px;color:var(--teal-dark);font-weight:750;letter-spacing:.2px}
+.auth-card h2{font-size:30px;color:var(--navy);line-height:1.3;margin:7px 0}
+.auth-card .desc{color:var(--muted);margin:0 0 26px}
+.field-label{display:block;font-size:13px;font-weight:700;color:var(--ink);margin:16px 0 7px}
+.input{width:100%;border:1px solid var(--line);background:#fff;border-radius:11px;padding:12px 14px;color:var(--ink);transition:.18s}
+.input::placeholder{color:#a4b0bd}
+.input:focus{border-color:#83b2ff;outline:3px solid rgba(79,143,247,.12)}
+.auth-hint{display:flex;align-items:flex-start;gap:9px;padding:11px 12px;margin:18px 0 8px;border-radius:11px;background:#fff7e9;color:#856035;font-size:12px}
+.auth-hint svg{width:16px;min-width:16px;margin-top:1px}
+.btn{border:0;border-radius:11px;padding:11px 16px;font-weight:750;transition:transform .16s,filter .16s,box-shadow .16s}
+.btn:hover{transform:translateY(-1px);filter:brightness(.98)}
+.btn-primary{color:#fff;background:linear-gradient(100deg,#188c9b,#12a99d);box-shadow:0 9px 18px rgba(18,169,157,.18)}
+.btn-dark{color:#fff;background:var(--navy)}
+.btn-light{color:var(--navy);background:#eef3f8}
+.btn-outline{border:1px solid var(--line);background:#fff;color:var(--ink)}
+.btn-small{padding:8px 11px;font-size:12px;border-radius:9px}
+.btn-wide{width:100%;margin-top:19px}
+.demo-link{display:block;text-align:center;border:0;background:transparent;color:var(--teal-dark);font-weight:700;font-size:13px;margin:15px auto 0;padding:6px}
+.auth-small{border-top:1px solid var(--line);margin-top:26px;padding-top:18px;font-size:12px;color:var(--muted);text-align:center}
+.auth-small b{color:var(--navy)}
+.app-shell{min-height:100vh;display:grid;grid-template-columns:252px minmax(0,1fr)}
+.sidebar{position:sticky;top:0;height:100vh;background:#fff;border-right:1px solid var(--line);padding:24px 17px 18px;display:flex;flex-direction:column;z-index:5}
+.sidebar-brand{display:flex;gap:11px;align-items:center;padding:3px 8px 25px;border-bottom:1px solid #edf0f4}
+.sidebar-brand .logo-mark{width:42px;height:42px;background:var(--navy);border:0;color:#9df0e5;border-radius:13px}
+.sidebar-brand b{font-size:14px;color:var(--navy);display:block;line-height:1.3}
+.sidebar-brand small{font-size:10px;color:var(--muted)}
+.nav-title{margin:20px 9px 9px;font-size:10px;letter-spacing:1px;font-weight:800;color:#a3aebb}
+.nav-menu{display:grid;gap:5px}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 12px;border-radius:11px;color:#667a8e;font-size:13px;font-weight:650;text-decoration:none;transition:.16s}
+.nav-item svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.nav-item:hover{background:#f4f7fa;color:var(--navy)}
+.nav-item.active{background:#eaf8f6;color:#087f78}
+.nav-item.active svg{stroke:#087f78}
+.nav-badge{margin-left:auto;font-size:10px;color:#a44b40;background:#fff0e4;border-radius:10px;padding:2px 6px}
+.sidebar-spacer{flex:1}
+.side-help{padding:13px;border-radius:14px;background:#f3f8fa;border:1px solid #edf1f4}
+.side-help b{display:block;font-size:12px;color:var(--navy)}
+.side-help p{font-size:11px;color:var(--muted);line-height:1.5;margin:5px 0 9px}
+.side-help button{padding:0;border:0;background:none;color:var(--teal-dark);font-size:11px;font-weight:750}
+.profile-card{display:flex;align-items:center;gap:10px;padding:16px 5px 0;margin-top:15px;border-top:1px solid #edf0f4}
+.avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(140deg,#d5f4ef,#b7ddd8);color:#145d63;font-weight:800;font-size:12px;flex:none}
+.profile-meta{min-width:0;flex:1}
+.profile-meta b{display:block;font-size:12px;color:var(--navy)}
+.profile-meta small{font-size:10px;color:var(--muted)}
+.profile-menu{border:0;background:transparent;color:#8291a0;font-size:17px}
+.main-area{min-width:0;padding:0 0 40px}
+.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:0 clamp(20px,4vw,52px);background:rgba(255,255,255,.82);border-bottom:1px solid var(--line)}
+.breadcrumb{font-size:12px;color:var(--muted)}
+.breadcrumb b{color:var(--navy)}
+.top-actions{display:flex;align-items:center;gap:11px}
+.semester-select{border:1px solid var(--line);background:#fff;border-radius:9px;padding:8px 11px;color:#50657a;font-size:11px}
+.icon-btn{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);background:#fff;color:#63778b;border-radius:10px;position:relative}
+.icon-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8}
+.dot{position:absolute;width:7px;height:7px;border-radius:50%;background:#ed7b66;right:7px;top:7px;border:1px solid white}
+.top-user{display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:0 0 0 4px}
+.top-user .avatar{width:33px;height:33px}
+.top-user span{font-size:11px;font-weight:700;color:var(--ink)}
+.content{max-width:1460px;margin:0 auto;padding:31px clamp(20px,4vw,52px) 0}
+.page{display:none;animation:fade .24s ease}
+.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.page-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:21px}
+.page-heading h1{font-size:26px;line-height:1.3;color:var(--navy);letter-spacing:-.3px;margin:0}
+.page-heading p{margin:5px 0 0;color:var(--muted);font-size:12px}
+.heading-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.demo-pill{display:inline-flex;align-items:center;gap:7px;border:1px solid #f2dfbf;background:#fff8ec;border-radius:20px;padding:6px 10px;color:#946829;font-size:10px;font-weight:700}
+.demo-pill i{width:6px;height:6px;background:#e6aa4c;border-radius:50%}
+.hero-card{position:relative;display:grid;grid-template-columns:minmax(0,1.35fr) minmax(270px,.65fr);gap:20px;align-items:center;overflow:hidden;border-radius:19px;padding:27px 30px;background:linear-gradient(112deg,#153e60 0%,#125a70 59%,#118b86 100%);color:#fff;box-shadow:0 14px 34px rgba(16,71,96,.12)}
+.hero-card:after{content:"";position:absolute;width:335px;height:335px;border:1px solid rgba(255,255,255,.12);border-radius:50%;right:11%;top:-170px}
+.hero-card:before{content:"";position:absolute;width:235px;height:235px;border:1px solid rgba(255,255,255,.09);border-radius:50%;right:17%;bottom:-170px}
+.hero-copy{position:relative;z-index:1}
+.hero-label{font-size:10px;color:#a5e9e0;font-weight:800;letter-spacing:1px}
+.hero-copy h2{font-size:22px;line-height:1.5;margin:8px 0 7px}
+.hero-copy p{font-size:12px;line-height:1.7;color:#cee0e8;max-width:530px;margin:0 0 17px}
+.hero-buttons{display:flex;gap:8px;flex-wrap:wrap}
+.hero-buttons .btn{font-size:11px}
+.hero-visual{position:relative;z-index:1;justify-self:center;width:min(100%,292px);padding:17px;border-radius:17px;background:rgba(246,255,255,.95);color:var(--navy);box-shadow:0 20px 44px rgba(7,33,53,.23);transform:rotate(1.5deg)}
+.visual-head{display:flex;align-items:center;justify-content:space-between;font-size:10px;font-weight:800;padding-bottom:11px;border-bottom:1px solid #e7edf1}
+.visual-head span{font-weight:500;color:var(--muted)}
+.visual-event{display:flex;align-items:center;gap:9px;margin-top:10px}
+.event-bar{width:3px;height:32px;border-radius:5px;background:var(--teal)}
+.event-bar.blue{background:var(--sky)}.event-bar.gold{background:var(--gold)}
+.visual-event b{font-size:10px;display:block}.visual-event small{font-size:9px;color:var(--muted)}
+.hero-check{position:absolute;right:12px;top:13px;width:23px;height:23px;border-radius:50%;background:#e3f7ee;color:#278565;display:grid;place-items:center;font-size:12px}
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:17px 0}
+.metric{padding:16px 17px;background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;align-items:center;gap:12px}
+.metric-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:#ecf8f6;color:#178c84}
+.metric:nth-child(2) .metric-icon{background:#edf3ff;color:#4a7ddd}
+.metric:nth-child(3) .metric-icon{background:#fff5e8;color:#d3953b}
+.metric-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.metric b{display:block;color:var(--navy);font-size:19px;line-height:1.2}
+.metric span{display:block;color:var(--muted);font-size:10px;margin-top:4px}
+.dashboard-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr);gap:15px}
+.card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px}
+.card-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:13px}
+.card-head h3{font-size:13px;color:var(--navy);margin:0}
+.text-link{border:0;background:transparent;color:var(--teal-dark);font-weight:750;font-size:10px;padding:3px}
+.schedule-list{display:grid;gap:9px}
+.schedule-row{display:grid;grid-template-columns:55px 4px minmax(0,1fr) auto;align-items:center;gap:11px;padding:11px 10px;border:1px solid #edf0f3;border-radius:11px;background:#fff}
+.schedule-time{font-size:10px;color:var(--muted);font-weight:700;text-align:right;line-height:1.45}
+.schedule-stripe{width:4px;min-height:37px;border-radius:5px;background:var(--teal)}
+.schedule-stripe.blue{background:var(--sky)}.schedule-stripe.gold{background:var(--gold)}
+.schedule-info b{display:block;font-size:11px;color:var(--navy)}
+.schedule-info span{display:block;font-size:10px;color:var(--muted);margin-top:3px}
+.room-chip{font-size:9px;color:#62788c;background:#f2f5f8;border-radius:7px;padding:5px 7px;white-space:nowrap}
+.alert-list{display:grid;gap:9px}
+.alert-row{display:flex;gap:10px;align-items:flex-start;padding:10px;border-radius:10px;background:#f9fbfc}
+.alert-mark{width:26px;height:26px;display:grid;place-items:center;border-radius:8px;background:#eaf8f6;color:var(--teal-dark);font-size:12px;flex:none}
+.alert-mark.orange{background:#fff3e3;color:#ca8e3a}.alert-mark.blue{background:#edf3ff;color:#4a7ddd}
+.alert-row b{display:block;font-size:10px;color:var(--navy)}
+.alert-row span{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.flow-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-top:15px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:15px 12px}
+.flow-step{display:flex;align-items:center;gap:8px;min-width:0;position:relative;padding:0 7px}
+.flow-step:not(:last-child):after{content:"";height:1px;background:#dae5eb;position:absolute;left:calc(100% - 5px);right:-5px;top:14px}
+.flow-num{width:27px;height:27px;border-radius:50%;background:#eaf8f6;color:var(--teal-dark);font-size:10px;font-weight:800;display:grid;place-items:center;flex:none;position:relative;z-index:1;border:3px solid white;box-shadow:0 0 0 1px #d8eee9}
+.flow-step span{font-size:9px;font-weight:700;color:#52677b;line-height:1.3;position:relative;z-index:1;background:#fff;padding-right:3px}
+.page-note{font-size:10px;color:#8795a3;margin:17px 0 0;line-height:1.6}
+.panel-card{background:#fff;border:1px solid var(--line);border-radius:15px;padding:19px}
+.toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.segmented{display:inline-flex;gap:3px;padding:4px;background:#f0f4f7;border-radius:10px}
+.segmented button{border:0;background:transparent;color:#718296;border-radius:7px;padding:7px 11px;font-size:10px;font-weight:700}
+.segmented button.active{background:#fff;color:var(--navy);box-shadow:0 2px 8px rgba(18,45,72,.1)}
+.legend{display:flex;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:9px}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend i{width:8px;height:8px;border-radius:3px;background:var(--teal)}
+.legend .planned-dot{background:var(--sky)}.legend .conflict-dot{background:var(--red)}
+.calendar-wrap{overflow:auto;border:1px solid #e8edf2;border-radius:11px}
+.calendar-grid{min-width:780px;display:grid;grid-template-columns:67px repeat(5,minmax(120px,1fr));grid-template-rows:40px repeat(20,27px);position:relative;background:#fff}
+.calendar-grid.day-mode{min-width:400px;grid-template-columns:67px minmax(280px,1fr)}
+.calendar-grid.month-mode{min-width:0;display:grid;grid-template-columns:repeat(7,1fr);grid-template-rows:35px repeat(5,80px);padding:5px}
+.cal-head{grid-row:1;display:grid;place-items:center;background:#f8fafc;border-bottom:1px solid #e9eef2;border-right:1px solid #eef1f4;font-size:10px;font-weight:800;color:#52677b}
+.cal-head.focus{color:var(--teal-dark);background:#f0fbf9}
+.cal-time{grid-column:1;align-self:start;transform:translateY(-7px);text-align:right;padding-right:9px;font-size:9px;color:#8b99a7}
+.cal-line{grid-column:2/-1;border-top:1px solid #edf1f4;pointer-events:none}
+.calendar-grid.day-mode .cal-line{grid-column:2/-1}
+.cal-event{z-index:2;margin:2px 4px;padding:5px 7px;border-radius:7px;overflow:hidden;background:#e8f7f4;border-left:3px solid var(--teal);font-size:9px;line-height:1.35;color:#176b68;cursor:pointer}
+.cal-event.plan{background:#edf3ff;border-left-color:var(--sky);color:#3a65a5}
+.cal-event.overlap{background:#fff0f0;border-left-color:var(--red);color:#a6434b}
+.cal-event b{display:block;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cal-event span{display:block;margin-top:3px;opacity:.82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.month-cell{position:relative;min-height:75px;border-right:1px solid #edf1f4;border-bottom:1px solid #edf1f4;padding:5px;color:#7d8c9c;font-size:9px}
+.month-cell.today{background:#f0fbf9;color:var(--teal-dark);font-weight:800}
+.month-dot{display:block;margin-top:4px;border-radius:4px;padding:3px 4px;background:#e8f7f4;color:#17716b;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:8px;font-weight:600}
+.month-dot.plan{background:#edf3ff;color:#3b68aa}
+.month-dot.overlap{background:#fff0f0;color:#ad5359}
+.calendar-bottom{display:flex;justify-content:space-between;align-items:center;gap:10px;padding-top:13px;flex-wrap:wrap}
+.calendar-bottom span{font-size:9px;color:var(--muted)}
+.select{border:1px solid var(--line);background:#fff;border-radius:9px;color:var(--ink);padding:8px 10px;font-size:10px}
+.search-bar{display:flex;gap:8px;flex:1;min-width:min(100%,300px)}
+.search-wrap{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:10px;padding:0 11px;background:#fff;flex:1}
+.search-wrap svg{width:16px;height:16px;stroke:#92a0ad;fill:none;stroke-width:2}
+.search-wrap input{border:0;outline:0;background:transparent;width:100%;padding:10px 0;font-size:11px;color:var(--ink)}
+.course-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+.course-card{padding:15px;border:1px solid var(--line);border-radius:12px;background:#fff;display:flex;flex-direction:column;min-height:165px;transition:.16s}
+.course-card:hover{border-color:#b9ddd8;box-shadow:0 8px 20px rgba(22,68,88,.06);transform:translateY(-1px)}
+.course-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.course-code{font-size:9px;color:#748699;font-weight:750}
+.course-credits{font-size:9px;color:#8c6d35;background:#fff5e6;border-radius:7px;padding:4px 7px}
+.course-card h3{font-size:13px;color:var(--navy);margin:8px 0 4px;line-height:1.45}
+.course-card p{font-size:9px;color:var(--muted);margin:0;line-height:1.6}
+.course-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:9px}
+.course-meta span{font-size:9px;color:#63778b;background:#f4f7f9;border-radius:6px;padding:4px 6px}
+.course-actions{display:flex;justify-content:space-between;align-items:center;margin-top:auto;padding-top:12px}
+.course-actions button{font-size:9px;padding:7px 9px}
+.empty-state{padding:36px 20px;text-align:center;color:var(--muted);font-size:11px;border:1px dashed #d9e2e9;border-radius:12px;background:#fbfcfd}
+.empty-state b{display:block;color:var(--navy);font-size:13px;margin-bottom:5px}
+.planner-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(270px,.85fr);gap:14px}
+.planner-list{display:grid;gap:9px}
+.planned-item{display:grid;grid-template-columns:31px minmax(0,1fr) auto;align-items:center;gap:11px;padding:12px;border:1px solid var(--line);border-radius:11px}
+.planned-code{width:31px;height:31px;border-radius:9px;background:#edf3ff;color:#4c78c8;display:grid;place-items:center;font-size:9px;font-weight:800}
+.planned-main b{display:block;font-size:11px;color:var(--navy)}
+.planned-main span{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+.remove-btn{border:0;background:#fff2f2;color:#c45b60;border-radius:8px;padding:6px 8px;font-size:9px}
+.sis-current{margin-top:16px;padding-top:14px;border-top:1px solid #edf0f3}
+.sis-current h4{font-size:10px;color:#61768b;margin:0 0 8px}
+.sis-item{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 0;border-bottom:1px solid #f1f3f5;font-size:9px;color:#64778a}
+.sis-item:last-child{border-bottom:0}
+.conflict-box{border-radius:12px;padding:14px;border:1px solid #f2c9cb;background:var(--red-bg);color:#a94d53}
+.conflict-box.clear{border-color:#cbe8db;background:var(--green-bg);color:#287658}
+.conflict-box b{display:block;font-size:12px}
+.conflict-box p{font-size:10px;margin:6px 0 0;line-height:1.7}
+.conflict-lines{margin:9px 0 0;padding-left:16px;font-size:9px;line-height:1.7}
+.info-callout{margin-top:12px;padding:12px;border-radius:10px;background:#f1f7fb;border:1px solid #e5eef4;color:#536e83;font-size:10px;line-height:1.6}
+.planner-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}
+.alert-settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.setting-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #edf0f3}
+.setting-row:last-child{border-bottom:0}
+.setting-row b{display:block;font-size:10px;color:var(--navy)}
+.setting-row span{display:block;font-size:9px;color:var(--muted);margin-top:3px}
+.switch{width:36px;height:21px;position:relative;flex:none}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch-ui{position:absolute;inset:0;background:#cbd4dc;border-radius:20px;transition:.2s;cursor:pointer}
+.switch-ui:after{content:"";position:absolute;width:15px;height:15px;left:3px;top:3px;background:white;border-radius:50%;box-shadow:0 1px 3px #0002;transition:.2s}
+.switch input:checked+.switch-ui{background:var(--teal)}
+.switch input:checked+.switch-ui:after{transform:translateX(15px)}
+.export-panel{min-height:100%;display:flex;flex-direction:column}
+.export-panel .export-buttons{display:grid;gap:8px;margin-top:14px}
+.export-panel .btn{font-size:10px}
+.export-icon{width:42px;height:42px;border-radius:12px;background:#edf3ff;color:#4f7bd0;display:grid;place-items:center;margin-bottom:12px}
+.export-icon svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.8}
+.flow-card{padding:20px}
+.flow-line{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin:18px 0}
+.flow-node{position:relative;padding:0 13px;text-align:center}
+.flow-node:not(:last-child):after{content:"";height:2px;background:#d8e7e7;position:absolute;left:65%;right:-35%;top:22px}
+.flow-circle{position:relative;z-index:1;margin:0 auto 10px;width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:#e8f7f4;color:#108a81;border:4px solid white;box-shadow:0 0 0 1px #d8eee9;font-weight:800;font-size:12px}
+.flow-node:nth-child(2) .flow-circle,.flow-node:nth-child(4) .flow-circle{background:#edf3ff;color:#4d76c6;box-shadow:0 0 0 1px #dfe8fc}
+.flow-node h3{font-size:10px;margin:0;color:var(--navy)}
+.flow-node p{font-size:9px;color:var(--muted);line-height:1.55}
+.flow-node button{font-size:9px;padding:6px 8px;margin-top:5px}
+.workflow-note{display:flex;gap:10px;align-items:flex-start;padding:13px 14px;border-radius:11px;background:#fff7e9;color:#88673a;font-size:10px;line-height:1.6}
+.workflow-note svg{width:17px;flex:none}
+.mobile-nav{display:none}
+.toast{position:fixed;left:50%;bottom:24px;z-index:20;transform:translate(-50%,16px);opacity:0;pointer-events:none;transition:.22s;padding:11px 16px;background:#173c5c;color:#fff;border-radius:11px;box-shadow:0 12px 30px rgba(16,45,75,.22);font-size:11px;max-width:calc(100vw - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.modal-backdrop{position:fixed;inset:0;z-index:30;background:rgba(13,33,52,.42);display:grid;place-items:center;padding:20px;animation:fade .18s ease}
+.modal{width:min(100%,430px);padding:22px;border-radius:17px;background:white;box-shadow:0 25px 70px rgba(7,31,51,.2)}
+.modal-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.modal-head h3{font-size:16px;color:var(--navy);margin:0}
+.modal-close{width:29px;height:29px;border:0;border-radius:8px;background:#f2f5f7;color:#738496;font-size:17px}
+.modal-body{font-size:11px;color:var(--muted);line-height:1.7;margin:12px 0}
+.map-card{height:145px;position:relative;overflow:hidden;border-radius:12px;background:#eaf3ed;margin:13px 0}
+.map-road{position:absolute;background:#fff;border:3px solid #dde6dc;border-radius:12px}
+.map-road.r1{left:-8%;top:42%;width:120%;height:20px;transform:rotate(-8deg)}
+.map-road.r2{left:47%;top:-20%;width:18px;height:150%;transform:rotate(17deg)}
+.map-building{position:absolute;width:53px;height:40px;display:grid;place-items:center;border-radius:8px;background:#d0e8dd;color:#446b5a;font-size:8px;font-weight:750}
+.map-building.b1{left:17%;top:19%}.map-building.b2{right:16%;bottom:14%;background:#fff1d5;color:#a17a3f}
+.map-pin{position:absolute;left:58%;top:37%;width:26px;height:26px;border:4px solid #fff;border-radius:50% 50% 50% 0;background:#ec7864;transform:rotate(-45deg);box-shadow:0 3px 9px #0002}
+.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:16px}
+@media(max-width:1080px){.app-shell{grid-template-columns:220px minmax(0,1fr)}.sidebar{padding-inline:13px}.hero-card{grid-template-columns:minmax(0,1.2fr) minmax(225px,.8fr)}.content{padding-inline:25px}.topbar{padding-inline:25px}}
+@media(max-width:820px){.auth-page{grid-template-columns:1fr}.auth-brand{min-height:330px;padding:27px 25px 24px}.auth-copy{margin-top:45px}.auth-copy h1{font-size:38px;max-width:460px}.auth-copy p{font-size:13px;max-width:440px}.auth-features{max-width:470px;margin-top:19px}.feature-mini{padding:10px}.feature-mini span{display:none}.auth-art{width:190px;height:140px;right:0;top:58%;opacity:.44}.art-calendar{width:170px;padding:12px}.art-note{width:115px;padding:10px}.auth-foot{margin-top:22px}.auth-form-side{padding:36px 24px 52px}.app-shell{grid-template-columns:1fr}.sidebar{position:relative;height:auto;padding:13px 17px;border-right:0;border-bottom:1px solid var(--line)}.sidebar-brand{padding:0;border:0}.sidebar-brand .logo-mark{width:37px;height:37px}.sidebar-brand small{display:none}.nav-title,.sidebar-spacer,.side-help,.profile-card{display:none}.nav-menu{margin-top:12px;display:flex;overflow:auto;gap:5px}.nav-item{white-space:nowrap;padding:8px 10px;font-size:10px}.nav-item svg{width:15px;height:15px}.topbar{height:58px;padding-inline:18px}.content{padding:23px 18px 85px}.mobile-nav{position:fixed;z-index:10;left:10px;right:10px;bottom:10px;display:flex;justify-content:space-around;gap:3px;padding:7px;background:rgba(255,255,255,.94);backdrop-filter:blur(12px);border:1px solid var(--line);box-shadow:0 8px 30px rgba(18,45,72,.12);border-radius:15px}.mobile-nav button{border:0;background:transparent;color:#718296;padding:5px 7px;display:grid;justify-items:center;gap:3px;font-size:8px;min-width:52px}.mobile-nav button.active{color:var(--teal-dark);font-weight:800}.mobile-nav svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}.dashboard-grid{grid-template-columns:1fr}.hero-card{grid-template-columns:1fr minmax(205px,.65fr)}.hero-copy h2{font-size:19px}}
+@media(max-width:570px){.auth-brand{min-height:290px;padding:22px 20px}.auth-copy{margin-top:37px}.auth-copy h1{font-size:32px}.auth-copy p{font-size:12px}.auth-features{gap:7px}.feature-mini{padding:9px}.feature-mini b{font-size:10px}.mini-icon{width:27px;height:27px}.auth-form-side{padding:32px 20px 42px}.auth-card h2{font-size:25px}.hero-card{grid-template-columns:1fr;padding:21px}.hero-visual{display:none}.hero-copy h2{font-size:18px}.page-heading{align-items:flex-start;flex-direction:column;margin-bottom:15px}.page-heading h1{font-size:22px}.heading-actions{width:100%;justify-content:space-between}.metric-grid{gap:7px}.metric{padding:11px 9px;gap:8px;align-items:flex-start;flex-direction:column}.metric-icon{width:31px;height:31px;border-radius:9px}.metric b{font-size:16px}.metric span{font-size:8px}.flow-strip{overflow:auto;grid-template-columns:repeat(5,minmax(100px,1fr));padding:13px 5px}.flow-step{padding:0 6px}.flow-step span{font-size:8px}.schedule-row{grid-template-columns:47px 4px minmax(0,1fr);gap:8px}.room-chip{grid-column:3;margin-top:-4px;width:max-content}.course-grid,.planner-grid,.alert-settings-grid{grid-template-columns:1fr}.course-card{min-height:150px}.toolbar{align-items:flex-start}.toolbar>.legend{order:3;width:100%}.flow-line{grid-template-columns:1fr;gap:4px;margin:15px 0}.flow-node{display:grid;grid-template-columns:42px minmax(0,1fr);gap:9px;text-align:left;padding:8px 0;align-items:center}.flow-node:not(:last-child):after{width:1px;height:auto;left:21px;right:auto;top:48px;bottom:-5px}.flow-circle{grid-row:1/4;margin:0;width:40px;height:40px}.flow-node h3{align-self:end}.flow-node p{margin:0}.flow-node button{justify-self:start;width:max-content}.semester-select{font-size:9px;padding:7px}.top-user span{display:none}.calendar-grid.month-mode{grid-template-rows:30px repeat(5,60px)}.month-cell{font-size:8px;padding:3px}.month-dot{font-size:7px;padding:2px}}
+</style>
+</head>
+<body>
+<section class="auth-page" id="authPage">
+  <div class="auth-brand">
+    <div class="auth-brand-inner">
+      <div class="brand-lockup"><div class="logo-mark">PSU</div><div>PSU Smart Schedule<small>PERSONAL ACADEMIC PLANNER</small></div></div>
+      <div class="auth-copy">
+        <div class="eyebrow">จัดตารางเรียนให้เป็นเรื่องง่าย</div>
+        <h1>วางแผนเทอมนี้<br>ได้อย่างมั่นใจ</h1>
+        <p>เห็นภาพรวมตารางเรียน ค้นหารายวิชา เช็กเวลาเรียนซ้อน และตั้งเตือนได้ในพื้นที่เดียว</p>
+        <div class="auth-features">
+          <div class="feature-mini"><div class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></div><b>ปฏิทินอ่านง่าย</b><span>ดูได้ทั้งวันและสัปดาห์</span></div>
+          <div class="feature-mini"><div class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div><b>วางแผนล่วงหน้า</b><span>เช็กเวลาซ้อนก่อนลงจริง</span></div>
+          <div class="feature-mini"><div class="mini-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></div><b>ไม่พลาดทุกนัด</b><span>เตือนคาบและวันสอบ</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="auth-art" aria-hidden="true">
+      <div class="art-card art-calendar"><b>ตารางสัปดาห์นี้</b><div class="art-row"><span></span><span>จ.</span><span>อ.</span><span>พ.</span></div><div class="art-row"><span>09:00</span><i class="art-cell c1"></i><i class="art-cell"></i><i class="art-cell"></i></div><div class="art-row"><span>10:00</span><i class="art-cell"></i><i class="art-cell c2"></i><i class="art-cell"></i></div><div class="art-row"><span>13:00</span><i class="art-cell"></i><i class="art-cell"></i><i class="art-cell c3"></i></div></div>
+      <div class="art-card art-note"><b>✓ ตารางพร้อมแล้ว</b><span>บันทึกเวลาเรียนไว้ในปฏิทินส่วนตัว</span></div>
+    </div>
+    <div class="auth-foot">ต้นแบบโครงงานวิชา 968-250 · วิทยาเขตภูเก็ต</div>
+  </div>
+  <div class="auth-form-side">
+    <form class="auth-card" id="demoLogin">
+      <div class="welcome">ยินดีต้อนรับ</div>
+      <h2>เข้าสู่ PSU Smart Schedule</h2>
+      <p class="desc">เริ่มต้นจัดตารางเรียนของคุณได้เลย</p>
+      <label class="field-label" for="studentId">บัญชี PSU Passport</label>
+      <input class="input" id="studentId" autocomplete="off" placeholder="ใช้ปุ่มทดลองด้านล่าง">
+      <label class="field-label" for="studentPass">รหัสผ่าน</label>
+      <input class="input" id="studentPass" type="password" autocomplete="off" placeholder="ไม่ต้องกรอกในโหมดสาธิต">
+      <div class="auth-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>หน้าเข้าสู่ระบบนี้เป็นเพียงตัวอย่าง <b>อย่ากรอกรหัสผ่าน PSU จริง</b> ข้อมูลจะไม่ถูกส่งหรือบันทึก</span></div>
+      <button class="btn btn-primary btn-wide" type="submit">เข้าสู่โหมดสาธิต&nbsp; →</button>
+      <button class="demo-link" type="button" id="skipLogin">ทดลองด้วยบัญชีตัวอย่าง</button>
+      <div class="auth-small"><b>PSU Smart Schedule</b><br>ชั้นบริการแสดงผลที่ต่อยอดจาก SIS โดยไม่แก้ไขระบบหลัก</div>
+    </form>
+  </div>
+</section>
+
+<div class="app-shell hidden" id="appShell">
+  <aside class="sidebar">
+    <div class="sidebar-brand"><div class="logo-mark">PSU</div><div><b>Smart Schedule</b><small>วางแผนเรียนอย่างชาญฉลาด</small></div></div>
+    <div class="nav-title">เมนูหลัก</div>
+    <nav class="nav-menu" aria-label="เมนูหลัก">
+      <a href="#dashboard" class="nav-item active" data-page="dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>ภาพรวม</a>
+      <a href="#calendar" class="nav-item" data-page="calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>ตารางเรียน</a>
+      <a href="#courses" class="nav-item" data-page="courses"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.1"/><path d="m16 16 5 5"/></svg>ค้นหารายวิชา</a>
+      <a href="#planner" class="nav-item" data-page="planner"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15M8 7h8M8 11h7"/></svg>วางแผนลงทะเบียน<span class="nav-badge" id="planBadge">2 วิชา</span></a>
+      <a href="#alerts" class="nav-item" data-page="alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>แจ้งเตือนและส่งออก</a>
+      <a href="#workflow" class="nav-item" data-page="workflow"><svg viewBox="0 0 24 24"><circle cx="5" cy="12" r="2.5"/><circle cx="19" cy="5" r="2.5"/><circle cx="19" cy="19" r="2.5"/><path d="m7.3 10.8 9.4-4.6M7.3 13.2l9.4 4.6"/></svg>วิธีใช้งานระบบ</a>
+    </nav>
+    <div class="sidebar-spacer"></div>
+    <div class="side-help"><b>ยังไม่แน่ใจว่าจะเริ่มตรงไหน?</b><p>ดูขั้นตอนการใช้งาน PSU Smart Schedule แบบสั้น ๆ</p><button data-open="workflow">ดู Workflow →</button></div>
+    <div class="profile-card"><div class="avatar">PSU</div><div class="profile-meta"><b>นักศึกษาตัวอย่าง</b><small>โหมดสาธิต</small></div><button class="profile-menu" id="logout" aria-label="ออกจากโหมดสาธิต">⋯</button></div>
+  </aside>
+  <main class="main-area">
+    <header class="topbar">
+      <div class="breadcrumb">PSU Smart Schedule&nbsp; / &nbsp;<b id="crumb">ภาพรวม</b></div>
+      <div class="top-actions">
+        <span class="demo-pill"><i></i>ข้อมูลตัวอย่าง</span>
+        <select class="semester-select" aria-label="ภาคการศึกษา"><option>ภาคเรียน 1 / 2569</option><option>ภาคเรียน 2 / 2569</option><option>ภาคฤดูร้อน / 2569</option></select>
+        <button class="icon-btn" id="topAlerts" aria-label="ไปหน้าแจ้งเตือน"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg><i class="dot"></i></button>
+        <button class="top-user" id="topUser"><div class="avatar">PSU</div><span>นักศึกษา</span></button>
+      </div>
+    </header>
+    <div class="content">
+      <section class="page active" id="page-dashboard" data-title="ภาพรวม">
+        <div class="page-heading"><div><h1>สวัสดี, นักศึกษา 👋</h1><p>มาดูภาพรวมการเรียนและสิ่งที่กำลังจะมาถึงกัน</p></div><div class="heading-actions"><span class="demo-pill"><i></i>ข้อมูลจำลองสำหรับสาธิต</span></div></div>
+        <div class="hero-card">
+          <div class="hero-copy"><div class="hero-label">YOUR SEMESTER, IN SYNC</div><h2>ทุกวิชา ทุกเวลา<br>อยู่ในมุมมองเดียว</h2><p>ดูตารางจาก SIS วางแผนวิชาใหม่ และตรวจสอบเวลาซ้อนก่อนกลับไปลงทะเบียนจริง</p><div class="hero-buttons"><button class="btn btn-primary" data-open="calendar">เปิดตารางเรียน&nbsp; →</button><button class="btn btn-light" data-open="planner">ดูแผนวิชาของฉัน</button></div></div>
+          <div class="hero-visual"><div class="visual-head">ตารางวันนี้ <span>พุธ · สัปดาห์ที่ 4</span></div><div class="visual-event"><i class="event-bar"></i><div><b>ภาษาอังกฤษเพื่อการสื่อสาร</b><small>09:00 – 10:30 · อาคาร LRC 204</small></div></div><div class="visual-event"><i class="event-bar blue"></i><div><b>การออกแบบประสบการณ์ผู้ใช้</b><small>13:00 – 15:00 · อาคาร DMC 301</small></div></div><span class="hero-check">✓</span></div>
+        </div>
+        <div class="metric-grid">
+          <div class="metric"><div class="metric-icon"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg></div><div><b>3 วิชา</b><span>ซิงก์จากตารางปัจจุบัน</span></div></div>
+          <div class="metric"><div class="metric-icon"><svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div><b id="plannedMetric">2 วิชา</b><span>กำลังวางแผนเพิ่ม</span></div></div>
+          <div class="metric"><div class="metric-icon"><svg viewBox="0 0 24 24"><path d="m12 3 2.7 5.5 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></svg></div><div><b>ตรวจได้ก่อนลง</b><span>รู้ทันเวลาชนล่วงหน้า</span></div></div>
+        </div>
+        <div class="dashboard-grid">
+          <div class="card"><div class="card-head"><h3>ตารางเรียนที่กำลังจะมาถึง</h3><button class="text-link" data-open="calendar">ดูตารางทั้งหมด →</button></div><div class="schedule-list" id="upcomingList"></div></div>
+          <div class="card"><div class="card-head"><h3>แจ้งเตือนล่าสุด</h3><button class="text-link" data-open="alerts">จัดการ →</button></div><div class="alert-list"><div class="alert-row"><div class="alert-mark">◷</div><div><b>เตือนก่อนเริ่มคาบ 15 นาที</b><span>ตั้งค่าได้ในเมนูแจ้งเตือน</span></div></div><div class="alert-row"><div class="alert-mark orange">!</div><div><b>ตรวจเวลาซ้อนก่อนลงทะเบียน</b><span>มี 2 วิชาในแผนที่ทับซ้อนกัน</span></div></div><div class="alert-row"><div class="alert-mark blue">↗</div><div><b>ส่งออกไปยังปฏิทินส่วนตัว</b><span>รองรับไฟล์ .ics</span></div></div></div></div>
+        </div>
+        <div class="flow-strip" aria-label="ขั้นตอนการใช้งาน"><div class="flow-step"><i class="flow-num">1</i><span>เข้าสู่ระบบ</span></div><div class="flow-step"><i class="flow-num">2</i><span>ดูตารางปฏิทิน</span></div><div class="flow-step"><i class="flow-num">3</i><span>ค้นหารายวิชา</span></div><div class="flow-step"><i class="flow-num">4</i><span>ตรวจเวลาชน</span></div><div class="flow-step"><i class="flow-num">5</i><span>ตั้งเตือน / ส่งออก</span></div></div>
+        <p class="page-note">ระบบจริงจะอ่านข้อมูลจาก SIS ผ่าน Integration Layer และ Cache ส่วนการลงทะเบียนจริงยังดำเนินการใน SIS</p>
+      </section>
+
+      <section class="page" id="page-calendar" data-title="ตารางเรียน">
+        <div class="page-heading"><div><h1>ตารางเรียนของฉัน</h1><p>ภาพรวมรายวิชาตามปฏิทิน พร้อมสลับมุมมองได้ตามต้องการ</p></div><div class="heading-actions"><span class="demo-pill"><i></i>ซิงก์ล่าสุด วันนี้ 08:30</span><button class="btn btn-outline btn-small" data-open="alerts">ตั้งแจ้งเตือน</button></div></div>
+        <div class="panel-card">
+          <div class="toolbar"><div class="segmented" id="calendarModes"><button data-mode="day">วัน</button><button class="active" data-mode="week">สัปดาห์</button><button data-mode="month">เดือน</button></div><div class="legend"><span><i></i>ตารางจาก SIS</span><span><i class="planned-dot"></i>วิชาที่กำลังวางแผน</span><span><i class="conflict-dot"></i>เวลาซ้อน</span></div></div>
+          <div class="calendar-wrap"><div class="calendar-grid" id="calendarGrid"></div></div>
+          <div class="calendar-bottom"><span>ตารางนี้ใช้ข้อมูลจำลองเพื่อแสดงแนวคิดการใช้งาน</span><select id="focusDay" class="select" aria-label="เลือกวันที่"><option value="จันทร์">วันจันทร์</option><option value="อังคาร">วันอังคาร</option><option value="พุธ" selected>วันพุธ</option><option value="พฤหัสบดี">วันพฤหัสบดี</option><option value="ศุกร์">วันศุกร์</option></select></div>
+        </div>
+        <p class="page-note">เลือกกิจกรรมในปฏิทินเพื่อดูรายละเอียดรายวิชาและตำแหน่งห้องเรียน</p>
+      </section>
+
+      <section class="page" id="page-courses" data-title="ค้นหารายวิชา">
+        <div class="page-heading"><div><h1>ค้นหารายวิชา</h1><p>ค้นหาด้วยชื่อหรือรหัสวิชา แล้วเพิ่มลงในแผนเพื่อเช็กตาราง</p></div><div class="heading-actions"><button class="btn btn-light btn-small" data-open="planner">เปิดแผนของฉัน <span id="coursePlanCount">2</span></button></div></div>
+        <div class="panel-card">
+          <div class="toolbar"><div class="search-bar"><label class="search-wrap"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.1"/><path d="m16 16 5 5"/></svg><input id="courseSearch" type="search" placeholder="ค้นหาชื่อหรือรหัสวิชา เช่น 968-250" aria-label="ค้นหารายวิชา"></label><button class="btn btn-primary btn-small" id="clearSearch">ล้างคำค้น</button></div><select class="select" id="dayFilter" aria-label="กรองตามวัน"><option value="">ทุกวัน</option><option>จันทร์</option><option>อังคาร</option><option>พุธ</option><option>พฤหัสบดี</option><option>ศุกร์</option></select></div>
+          <div class="course-grid" id="courseResults"></div>
+        </div>
+        <p class="page-note">รายวิชา ตอนเรียน เวลา และตำแหน่งอาคารในเว็บต้นแบบเป็นข้อมูลสมมติ ไม่ใช่ข้อมูลลงทะเบียนจริง</p>
+      </section>
+
+      <section class="page" id="page-planner" data-title="วางแผนลงทะเบียน">
+        <div class="page-heading"><div><h1>วางแผนลงทะเบียน</h1><p>ลองจัดวิชาในแผน แล้วตรวจสอบเวลาซ้อนก่อนลงทะเบียนจริง</p></div><div class="heading-actions"><span class="demo-pill"><i></i><span id="plannerCount">2</span> วิชาในแผน</span><button class="btn btn-light btn-small" data-open="courses">＋ เพิ่มรายวิชา</button></div></div>
+        <div class="planner-grid">
+          <div class="panel-card"><div class="card-head"><h3>รายวิชาที่เลือกไว้</h3><button class="text-link" data-open="calendar">ดูบนปฏิทิน →</button></div><div class="planner-list" id="plannerList"></div><div class="sis-current"><h4>ตารางเรียนปัจจุบันจาก SIS</h4><div id="sisList"></div></div></div>
+          <div><div class="panel-card"><div id="conflictResult"></div><div class="planner-actions"><button class="btn btn-primary btn-small" id="checkConflicts">ตรวจเวลาชนอีกครั้ง</button><button class="btn btn-outline btn-small" data-open="courses">ค้นหารายวิชา</button></div></div><div class="info-callout"><b>โปรดทราบ:</b> หน้านี้ใช้จำลองแผนเท่านั้น ระบบจะไม่ลงทะเบียนให้ การลงทะเบียนจริงยังทำผ่าน SIS ตามปกติ</div></div>
+        </div>
+        <p class="page-note">ลองกดนำวิชาออก แล้วเลือก “ตรวจเวลาชนอีกครั้ง” เพื่อดูผลลัพธ์ที่เปลี่ยนตามแผน</p>
+      </section>
+
+      <section class="page" id="page-alerts" data-title="แจ้งเตือนและส่งออก">
+        <div class="page-heading"><div><h1>แจ้งเตือนและส่งออก</h1><p>ปรับการเตือนให้เหมาะกับตารางเรียน แล้วนำตารางไปใช้ต่อในปฏิทินส่วนตัว</p></div></div>
+        <div class="alert-settings-grid">
+          <div class="panel-card"><div class="card-head"><h3>ตั้งค่าการแจ้งเตือน</h3><span class="demo-pill"><i></i>บันทึกในเครื่องนี้</span></div>
+            <div class="setting-row"><div><b>ก่อนเริ่มคาบเรียน</b><span>เตือนล่วงหน้าก่อนเวลาเรียน</span></div><label class="switch"><input type="checkbox" data-setting="class" checked><i class="switch-ui"></i></label></div>
+            <div class="setting-row"><div><b>ก่อนถึงวันสอบ</b><span>เตือนเมื่อใกล้วันและเวลาสอบ</span></div><label class="switch"><input type="checkbox" data-setting="exam" checked><i class="switch-ui"></i></label></div>
+            <div class="setting-row"><div><b>เมื่อมีการเปลี่ยนห้อง</b><span>แจ้งเตือนเมื่อข้อมูลห้องมีการอัปเดต</span></div><label class="switch"><input type="checkbox" data-setting="room"><i class="switch-ui"></i></label></div>
+            <div class="setting-row"><div><b>สรุปตารางประจำสัปดาห์</b><span>รับสรุปกำหนดการก่อนเริ่มสัปดาห์</span></div><label class="switch"><input type="checkbox" data-setting="weekly"><i class="switch-ui"></i></label></div>
+            <button class="btn btn-primary btn-small" id="saveAlerts" style="margin-top:13px">บันทึกการตั้งค่า</button>
+          </div>
+          <div class="panel-card export-panel"><div class="export-icon"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M4 18v3h16v-3"/></svg></div><h3 style="font-size:13px;color:var(--navy);margin:0">ปฏิทินส่วนตัว</h3><p class="page-note" style="margin:6px 0 0">ส่งออกตารางเรียนที่ซิงก์จาก SIS ไปใช้งานในแอปปฏิทินอื่น</p><div class="export-buttons"><button class="btn btn-dark" id="downloadIcs">ดาวน์โหลดตารางเรียน (.ics)</button><button class="btn btn-outline" id="googleConnect">จำลองการเชื่อม Google Calendar</button></div><div class="info-callout" style="margin-top:auto">การเชื่อมต่อจริงจะต้องแสดงหน้าขออนุญาตจากผู้ใช้ก่อน ในต้นแบบนี้ไม่มีการเชื่อมบัญชีภายนอก</div></div>
+        </div>
+      </section>
+
+      <section class="page" id="page-workflow" data-title="วิธีใช้งานระบบ">
+        <div class="page-heading"><div><h1>Workflow การใช้งาน</h1><p>ขั้นตอนตั้งแต่เข้าสู่ระบบจนถึงการนำตารางไปใช้ต่อ</p></div><div class="heading-actions"><span class="demo-pill"><i></i>ตัวอย่างการทำงาน</span></div></div>
+        <div class="panel-card flow-card"><div class="flow-line">
+          <div class="flow-node"><i class="flow-circle">01</i><h3>เข้าสู่ระบบ</h3><p>ใช้ PSU Passport<br>เพื่อยืนยันตัวตน</p><button class="btn btn-light" data-open="dashboard">ไปหน้าแรก</button></div>
+          <div class="flow-node"><i class="flow-circle">02</i><h3>ดูตารางเรียน</h3><p>ระบบอ่านข้อมูล SIS<br>แล้วแสดงเป็นปฏิทิน</p><button class="btn btn-light" data-open="calendar">เปิดปฏิทิน</button></div>
+          <div class="flow-node"><i class="flow-circle">03</i><h3>ค้นหาวิชา / ห้อง</h3><p>ค้นหารายวิชาและ<br>ดูตำแหน่งห้องเรียน</p><button class="btn btn-light" data-open="courses">ค้นหารายวิชา</button></div>
+          <div class="flow-node"><i class="flow-circle">04</i><h3>วางแผน / เช็กเวลา</h3><p>ลองจัดวิชาก่อน<br>ตรวจเวลาซ้อน</p><button class="btn btn-light" data-open="planner">เปิดแผนวิชา</button></div>
+          <div class="flow-node"><i class="flow-circle">05</i><h3>ตั้งเตือน / ส่งออก</h3><p>เลือกการเตือนและ<br>ดาวน์โหลดไฟล์ .ics</p><button class="btn btn-light" data-open="alerts">ตั้งค่าเตือน</button></div>
+        </div><div class="workflow-note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg><span>PSU Smart Schedule ทำหน้าที่แสดงผลและช่วยวางแผนเท่านั้น ข้อมูลจะอ่านผ่าน Integration Layer และ Cache ส่วนการลงทะเบียนจริงยังทำที่ SIS</span></div></div>
+        <div class="dashboard-grid" style="margin-top:14px"><div class="card"><div class="card-head"><h3>ผู้ใช้งานหลัก</h3></div><div class="schedule-row"><div class="avatar">PSU</div><div class="schedule-info"><b>นักศึกษา</b><span>ดูตาราง ค้นหารายวิชา ตรวจเวลาชน และตั้งการแจ้งเตือน</span></div></div></div><div class="card"><div class="card-head"><h3>ขอบเขตระบบ</h3></div><div class="alert-row"><div class="alert-mark">✓</div><div><b>ช่วยให้วางแผนได้ดีขึ้น</b><span>ไม่แก้ไขข้อมูลหลักและไม่ลงทะเบียนแทนผู้ใช้</span></div></div></div></div>
+      </section>
+    </div>
+  </main>
+</div>
+<nav class="mobile-nav" id="mobileNav" aria-label="เมนูมือถือ"><button class="active" data-page="dashboard"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="10" width="8" height="11" rx="2"/><rect x="3" y="13" width="8" height="8" rx="2"/></svg>ภาพรวม</button><button data-page="calendar"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>ตาราง</button><button data-page="courses"><svg viewBox="0 0 24 24"><circle cx="10.8" cy="10.8" r="7.1"/><path d="m16 16 5 5"/></svg>ค้นหา</button><button data-page="planner"><svg viewBox="0 0 24 24"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15M8 7h8M8 11h7"/></svg>แผน</button><button data-page="alerts"><svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg>เตือน</button></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div id="modalHost"></div>
+<script>
+const days=["จันทร์","อังคาร","พุธ","พฤหัสบดี","ศุกร์"];
+const currentClasses=[
+  {id:"sis1",code:"949-101",name:"การเขียนโปรแกรมเบื้องต้น",day:"จันทร์",start:"09:00",end:"10:30",room:"อาคาร ENI 201",kind:"sis",color:"teal"},
+  {id:"sis2",code:"946-120",name:"ภาษาอังกฤษเพื่อการสื่อสาร",day:"พุธ",start:"09:00",end:"10:30",room:"อาคาร LRC 204",kind:"sis",color:"blue"},
+  {id:"sis3",code:"943-210",name:"คณิตศาสตร์ดิสครีต",day:"ศุกร์",start:"13:00",end:"15:00",room:"อาคาร ENI 303",kind:"sis",color:"gold"}
+];
+const catalog=[
+  {id:"968-250",name:"การวิเคราะห์และออกแบบระบบ",credits:3,day:"อังคาร",start:"13:00",end:"16:00",room:"อาคาร PKI 402",teacher:"ผศ. ดร. ตัวอย่าง",color:"blue"},
+  {id:"945-211",name:"โครงสร้างข้อมูลและอัลกอริทึม",credits:3,day:"อังคาร",start:"14:00",end:"16:00",room:"อาคาร ENI 301",teacher:"อ. ตัวอย่าง",color:"teal"},
+  {id:"947-220",name:"การออกแบบประสบการณ์ผู้ใช้",credits:3,day:"พุธ",start:"13:00",end:"15:00",room:"อาคาร DMC 301",teacher:"อ. ตัวอย่าง",color:"gold"},
+  {id:"949-231",name:"ระบบฐานข้อมูล",credits:3,day:"พฤหัสบดี",start:"09:00",end:"12:00",room:"อาคาร ENI 407",teacher:"ผศ. ตัวอย่าง",color:"blue"},
+  {id:"943-101",name:"แคลคูลัสสำหรับวิทยาศาสตร์",credits:3,day:"จันทร์",start:"10:00",end:"12:00",room:"อาคาร ENI 305",teacher:"อ. ตัวอย่าง",color:"teal"},
+  {id:"946-230",name:"ภาษาอังกฤษเชิงวิชาการ",credits:3,day:"พฤหัสบดี",start:"13:00",end:"15:30",room:"อาคาร LRC 206",teacher:"อ. ตัวอย่าง",color:"gold"}
+];
+catalog.forEach(c=>{c.code=c.id});
+let selected=new Set(["968-250","945-211"]);
+let calMode="week";
+let lastChecked=null;
+const pageLabels={dashboard:"ภาพรวม",calendar:"ตารางเรียน",courses:"ค้นหารายวิชา",planner:"วางแผนลงทะเบียน",alerts:"แจ้งเตือนและส่งออก",workflow:"วิธีใช้งานระบบ"};
+const byId=id=>document.getElementById(id);
+function toast(message){const box=byId("toast");box.textContent=message;box.classList.add("show");clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>box.classList.remove("show"),2700)}
+function showApp(){byId("authPage").classList.add("hidden");byId("appShell").classList.remove("hidden");byId("mobileNav").classList.remove("hidden");openPage("dashboard");renderAll()}
+function showAuth(){byId("appShell").classList.add("hidden");byId("mobileNav").classList.add("hidden");byId("authPage").classList.remove("hidden");window.scrollTo({top:0,behavior:"smooth"})}
+function openPage(id){const valid=pageLabels[id]?id:"dashboard";document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+valid));document.querySelectorAll("[data-page]").forEach(a=>a.classList.toggle("active",a.dataset.page===valid));document.querySelectorAll(".nav-item").forEach(a=>a.classList.toggle("active",a.dataset.page===valid));byId("crumb").textContent=pageLabels[valid];window.location.hash=valid;window.scrollTo({top:0,behavior:"smooth"});if(valid==="calendar")renderCalendar();if(valid==="courses")renderCourses();if(valid==="planner")renderPlanner()}
+function navigateFromHash(){const id=window.location.hash.replace("#","");if(pageLabels[id])openPage(id)}
+document.querySelectorAll("[data-page]").forEach(el=>el.addEventListener("click",e=>{e.preventDefault();openPage(el.dataset.page)}));
+document.querySelectorAll("[data-open]").forEach(el=>el.addEventListener("click",()=>openPage(el.dataset.open)));
+byId("demoLogin").addEventListener("submit",e=>{e.preventDefault();showApp();toast("เข้าสู่โหมดสาธิตแล้ว")});
+byId("skipLogin").addEventListener("click",()=>{showApp();toast("กำลังเปิดบัญชีตัวอย่าง")});
+byId("logout").addEventListener("click",showAuth);byId("topUser").addEventListener("click",showAuth);
+byId("topAlerts").addEventListener("click",()=>openPage("alerts"));
+byId("calendarModes").addEventListener("click",e=>{const b=e.target.closest("button[data-mode]");if(!b)return;calMode=b.dataset.mode;document.querySelectorAll("#calendarModes button").forEach(x=>x.classList.toggle("active",x===b));renderCalendar()});
+byId("focusDay").addEventListener("change",renderCalendar);
+byId("courseSearch").addEventListener("input",renderCourses);
+byId("dayFilter").addEventListener("change",renderCourses);
+byId("clearSearch").addEventListener("click",()=>{byId("courseSearch").value="";byId("dayFilter").value="";renderCourses()});
+byId("courseResults").addEventListener("click",e=>{const action=e.target.closest("[data-course-action]");if(!action)return;const course=catalog.find(c=>c.id===action.dataset.courseAction);if(selected.has(course.id)){selected.delete(course.id);toast("นำวิชาออกจากแผนแล้ว")}else{selected.add(course.id);toast("เพิ่มวิชา "+course.id+" เข้าแผนแล้ว")}lastChecked=null;renderAll()});
+byId("plannerList").addEventListener("click",e=>{const btn=e.target.closest("[data-remove]");if(!btn)return;selected.delete(btn.dataset.remove);lastChecked=null;renderAll();toast("นำรายวิชาออกจากแผนแล้ว")});
+byId("checkConflicts").addEventListener("click",()=>{lastChecked=findConflicts();renderPlanner();toast(lastChecked.length?"พบช่วงเวลาซ้อนในแผน":"ไม่พบเวลาซ้อนในแผน")});
+byId("saveAlerts").addEventListener("click",()=>{const settings={};document.querySelectorAll("[data-setting]").forEach(x=>settings[x.dataset.setting]=x.checked);localStorage.setItem("psuDemoAlerts",JSON.stringify(settings));toast("บันทึกการตั้งค่าแจ้งเตือนแล้ว")});
+byId("downloadIcs").addEventListener("click",downloadIcs);
+byId("googleConnect").addEventListener("click",showCalendarConsent);
+document.addEventListener("click",e=>{const room=e.target.closest("[data-room]");if(room){const c=[...currentClasses,...catalog].find(x=>x.id===room.dataset.room);if(c)showRoom(c)}});
+window.addEventListener("hashchange",navigateFromHash);
+function esc(s){return String(s).replace(/[&<>"']/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[ch]))}
+function allPlan(){return catalog.filter(c=>selected.has(c.id))}
+function mins(t){const [h,m]=t.split(":").map(Number);return h*60+m}
+function overlaps(a,b){return a.day===b.day&&mins(a.start)<mins(b.end)&&mins(b.start)<mins(a.end)}
+function findConflicts(){const proposed=allPlan(),all=[...currentClasses,...proposed],hits=[];for(let i=0;i<all.length;i++)for(let j=i+1;j<all.length;j++){if(overlaps(all[i],all[j]))hits.push([all[i],all[j]])}return hits}
+function renderAll(){renderDashboard();renderCourses();renderPlanner();renderCalendar();const n=selected.size;byId("planBadge").textContent=n+" วิชา";byId("plannedMetric").textContent=n+" วิชา";byId("coursePlanCount").textContent=n;byId("plannerCount").textContent=n}
+function renderDashboard(){const list=byId("upcomingList");list.innerHTML=currentClasses.map(c=>'<div class="schedule-row"><div class="schedule-time">'+esc(c.day)+'<br>'+esc(c.start)+'</div><i class="schedule-stripe '+(c.color==="blue"?"blue":c.color==="gold"?"gold":"")+'"></i><div class="schedule-info"><b>'+esc(c.name)+'</b><span>'+esc(c.code)+' · '+esc(c.end)+'</span></div><button class="room-chip" data-room="'+esc(c.id)+'">'+esc(c.room)+'</button></div>').join("")}
+function renderCourses(){const q=byId("courseSearch").value.trim().toLowerCase(),day=byId("dayFilter").value;const data=catalog.filter(c=>(!q||(c.id+" "+c.name+" "+c.room).toLowerCase().includes(q))&&(!day||c.day===day));const host=byId("courseResults");if(!data.length){host.innerHTML='<div class="empty-state" style="grid-column:1/-1"><b>ไม่พบรายวิชาที่ตรงกับคำค้น</b>ลองค้นด้วยชื่อหรือรหัสวิชาอื่น</div>';return}host.innerHTML=data.map(c=>'<article class="course-card"><div class="course-top"><span class="course-code">'+esc(c.id)+'</span><span class="course-credits">'+c.credits+' หน่วยกิต</span></div><h3>'+esc(c.name)+'</h3><p>'+esc(c.teacher)+'</p><div class="course-meta"><span>◷ '+esc(c.day)+' '+esc(c.start)+'–'+esc(c.end)+'</span><span>'+esc(c.room)+'</span></div><div class="course-actions"><button class="text-link" data-room="'+esc(c.id)+'">ดูตำแหน่งห้อง ↗</button><button class="btn '+(selected.has(c.id)?"btn-light":"btn-primary")+' btn-small" data-course-action="'+esc(c.id)+'">'+(selected.has(c.id)?"✓ อยู่ในแผน":"＋ เพิ่มเข้าแผน")+'</button></div></article>').join("")}
+function renderPlanner(){const plan=allPlan(),host=byId("plannerList");host.innerHTML=plan.length?plan.map(c=>'<div class="planned-item"><div class="planned-code">'+esc(c.id.split("-")[0])+'</div><div class="planned-main"><b>'+esc(c.name)+'</b><span>'+esc(c.id)+' · '+esc(c.day)+' '+esc(c.start)+'–'+esc(c.end)+' · '+esc(c.room)+'</span></div><button class="remove-btn" data-remove="'+esc(c.id)+'">นำออก</button></div>').join(""):'<div class="empty-state"><b>ยังไม่มีวิชาในแผน</b>ไปที่ค้นหารายวิชาเพื่อเพิ่มวิชาที่สนใจ</div>';byId("sisList").innerHTML=currentClasses.map(c=>'<div class="sis-item"><span>'+esc(c.day)+' '+esc(c.start)+'–'+esc(c.end)+' · '+esc(c.name)+'</span><button class="text-link" data-room="'+esc(c.id)+'">ห้อง</button></div>').join("");const hits=lastChecked===null?findConflicts():lastChecked;const result=byId("conflictResult");if(hits.length){result.innerHTML='<div class="conflict-box"><b>⚠ พบเวลาซ้อน '+hits.length+' ช่วง</b><p>ปรับตอนเรียนหรือนำวิชาออกจากแผน แล้วตรวจอีกครั้ง</p><ul class="conflict-lines">'+hits.map(pair=>'<li>'+esc(pair[0].code+" "+pair[0].name)+' ชนกับ '+esc(pair[1].code+" "+pair[1].name)+' · '+esc(pair[0].day)+" "+esc(mins(pair[0].start)>mins(pair[1].start)?pair[0].start:pair[1].start)+"–"+esc(mins(pair[0].end)<mins(pair[1].end)?pair[0].end:pair[1].end)+'</li>').join("")+'</ul></div>'}else{result.innerHTML='<div class="conflict-box clear"><b>✓ ไม่พบเวลาซ้อน</b><p>วิชาที่เลือกไม่ชนกับตารางปัจจุบันจาก SIS<br>คุณสามารถบันทึกแผนไว้ทบทวนก่อนลงทะเบียนจริง</p></div>'}}
+function getEvents(){return [...currentClasses,...allPlan()].map(c=>({...c,kind:currentClasses.some(s=>s.id===c.id)?"sis":"plan"}))}
+function renderCalendar(){const host=byId("calendarGrid");const events=getEvents(),hits=findConflicts().flat();if(calMode==="month"){host.className="calendar-grid month-mode";host.innerHTML=["จ.","อ.","พ.","พฤ.","ศ.","ส.","อา."].map(d=>'<div class="cal-head">'+d+'</div>').join("");for(let n=1;n<=35;n++){const weekday=(n-1)%7;let classes=[];if(weekday<5)classes=events.filter(c=>days.indexOf(c.day)===weekday);host.innerHTML+='<div class="month-cell '+(n===17?"today":"")+'">'+(n<=30?n:"")+(classes.map(c=>'<span class="month-dot '+(c.kind==="plan"?"plan":"")+' '+(hits.some(h=>h.id===c.id)?"overlap":"")+'">'+esc(c.start)+' '+esc(c.name)+'</span>').join(""))+'</div>'}return}
+  const visibleDays=calMode==="day"?[byId("focusDay").value]:days;host.className="calendar-grid"+(calMode==="day"?" day-mode":"");host.style.gridTemplateColumns=calMode==="day"?"67px minmax(280px,1fr)":"";let html='<div class="cal-head"></div>';visibleDays.forEach(d=>html+='<div class="cal-head '+(d==="พุธ"?"focus":"")+'" style="grid-column:'+(visibleDays.indexOf(d)+2)+';grid-row:1">'+d+'</div>');for(let half=0;half<=20;half+=4){const hour=8+half/2;const row=2+half;html+='<div class="cal-time" style="grid-row:'+row+'">'+String(hour).padStart(2,"0")+':00</div>'}for(let r=2;r<=21;r++){html+='<i class="cal-line" style="grid-row:'+r+'"></i>'}events.filter(c=>visibleDays.includes(c.day)).forEach(c=>{const col=visibleDays.indexOf(c.day)+2;const startLine=2+(mins(c.start)-480)/30;const endLine=2+(mins(c.end)-480)/30;const isOverlap=hits.some(h=>h.id===c.id);html+='<div class="cal-event '+(c.kind==="plan"?"plan ":"")+(isOverlap?"overlap":"")+'" style="grid-column:'+col+';grid-row:'+startLine+'/'+endLine+'" data-room="'+esc(c.id)+'"><b>'+esc(c.code)+' '+esc(c.name)+'</b><span>'+esc(c.start)+'–'+esc(c.end)+' · '+esc(c.room)+'</span></div>'});host.innerHTML=html}
+function showRoom(c){byId("modalHost").innerHTML='<div class="modal-backdrop" data-dismiss="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><div><span class="eyebrow" style="color:var(--teal-dark);font-size:9px;letter-spacing:.7px">LOCATION PREVIEW</span><h3 id="modalTitle">'+esc(c.room)+'</h3></div><button class="modal-close" data-dismiss="true" aria-label="ปิด">×</button></div><p class="modal-body">'+esc(c.name)+' · '+esc(c.day)+' '+esc(c.start)+'–'+esc(c.end)+'<br>ตำแหน่งห้องจำลองเพื่อแสดงแนวคิดการค้นหาอาคาร</p><div class="map-card"><i class="map-road r1"></i><i class="map-road r2"></i><span class="map-building b1">อาคารเรียน</span><span class="map-building b2">โรงอาหาร</span><i class="map-pin"></i></div><div class="modal-body">แผนที่นี้เป็นภาพตัวอย่าง ไม่ใช่ตำแหน่งอาคารจริง</div><div class="modal-actions"><button class="btn btn-primary btn-small" data-dismiss="true">ปิดหน้าต่าง</button></div></div></div>'}
+function showCalendarConsent(){byId("modalHost").innerHTML='<div class="modal-backdrop" data-dismiss="true"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modal-head"><h3 id="modalTitle">เชื่อมต่อ Google Calendar</h3><button class="modal-close" data-dismiss="true" aria-label="ปิด">×</button></div><p class="modal-body">ในระบบจริง ผู้ใช้จะตรวจสอบสิทธิ์ที่ขอและอนุญาตการเชื่อมต่อก่อนซิงก์ข้อมูล<br><br><b>ต้นแบบนี้ไม่ได้เปิดหน้า Google และไม่ได้ส่งข้อมูลออกจากเครื่อง</b></p><div class="modal-actions"><button class="btn btn-outline btn-small" data-dismiss="true">ยกเลิก</button><button class="btn btn-primary btn-small" id="simulateConsent">จำลองการอนุญาต</button></div></div></div>';byId("simulateConsent").addEventListener("click",()=>{byId("modalHost").innerHTML="";toast("สาธิตขั้นตอนขออนุญาตแล้ว · ยังไม่ได้เชื่อมบัญชีจริง")})}
+byId("modalHost").addEventListener("click",e=>{if(e.target.dataset.dismiss==="true")byId("modalHost").innerHTML=""});
+function pad(n){return String(n).padStart(2,"0")}
+function nextWeekday(dayIndex,hour,minute){const now=new Date();const date=new Date(now.getFullYear(),now.getMonth(),now.getDate());const offset=(dayIndex-date.getDay()+7)%7;date.setDate(date.getDate()+offset);date.setHours(hour,minute,0,0);if(date<=now)date.setDate(date.getDate()+7);return date}
+function icsDate(d){return d.getFullYear()+pad(d.getMonth()+1)+pad(d.getDate())+"T"+pad(d.getHours())+pad(d.getMinutes())+"00"}
+function icsEscape(s){return s.replace(/\\/g,"\\\\").replace(/,/g,"\\,").replace(/;/g,"\\;").replace(/\n/g,"\\n")}
+function downloadIcs(){const lines=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//PSU Smart Schedule//TH","CALSCALE:GREGORIAN","METHOD:PUBLISH"];currentClasses.forEach(c=>{const index=days.indexOf(c.day),[sh,sm]=c.start.split(":").map(Number),[eh,em]=c.end.split(":").map(Number),start=nextWeekday(index+1,sh,sm),end=new Date(start);end.setHours(eh,em,0,0);lines.push("BEGIN:VEVENT","UID:"+c.id+"@psu-smart-schedule.demo","DTSTAMP:"+icsDate(new Date()) ,"DTSTART:"+icsDate(start),"DTEND:"+icsDate(end),"RRULE:FREQ=WEEKLY;COUNT=12","SUMMARY:"+icsEscape(c.name+" ("+c.code+")"),"LOCATION:"+icsEscape(c.room),"DESCRIPTION:ข้อมูลตัวอย่างจาก PSU Smart Schedule","END:VEVENT")});lines.push("END:VCALENDAR");const blob=new Blob([lines.join("\r\n")],{type:"text/calendar;charset=utf-8"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="PSU-Smart-Schedule-Demo.ics";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(a.href);toast("ดาวน์โหลดไฟล์ปฏิทิน .ics แล้ว")}
+(function loadSettings(){try{const s=JSON.parse(localStorage.getItem("psuDemoAlerts")||"{}");document.querySelectorAll("[data-setting]").forEach(x=>{if(Object.prototype.hasOwnProperty.call(s,x.dataset.setting))x.checked=s[x.dataset.setting]})}catch(e){}})();
+renderAll();
+</script>
+</body>
+</html>
